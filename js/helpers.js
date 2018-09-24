@@ -338,7 +338,7 @@ _.mixin({
 			let lines = _.filter(temp_gr.EstimateLineWrap(paragraph, font, width), (item, i) => {
 				return i % 2 == 0;
 			});
-			result.push.apply(result, _.map(lines, _.trim));
+			result = [...result, ...(_.map(lines, _.trim))];
 		});
 		temp_bmp.ReleaseGraphics(temp_gr);
 		temp_gr = null;

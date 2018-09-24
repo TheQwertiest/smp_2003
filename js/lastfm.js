@@ -100,11 +100,11 @@ _.mixin({
 				}
 				data = _.get(data, 'lovedtracks.track', []);
 				if (data.length) {
-					this.loved_tracks.push.apply(this.loved_tracks, _.map(data, (item) => {
+					this.loved_tracks = [...this.loved_tracks, ...(_.map(data, (item) => {
 						const artist = item.artist.name.toLowerCase();
 						const title = item.name.toLowerCase();
 						return artist + ' - ' + title;
-					}));
+					}))];
 					console.log('Loved tracks: completed page', + this.page, 'of ', this.pages);
 				}
 				if (this.page < this.pages) {

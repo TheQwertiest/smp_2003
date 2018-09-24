@@ -503,7 +503,7 @@ _.mixin({
 								if (group) {
 									const name = (primary + ' + ' + secondary).replace('null + null', 'Unspecified type').replace('null + ', '').replace(' + null', '');
 									this.data.push({name : name, width : 0, url : '', date : ''});
-									this.data.push.apply(this.data, group);
+									this.data = [...this.data, ...group];
 									this.data.push({name : '', width : 0, url : '', date : ''});
 								}
 							});
@@ -647,7 +647,7 @@ _.mixin({
 				const max_offset = Math.min(500, data['release-group-count'] || 0) - 100;
 				let rg = data['release-groups'] || [];
 				if (rg.length) {
-					this.mb_data.push.apply(this.mb_data, rg);
+					this.mb_data = [...this.mb_data, ...rg];
 				}
 				if (this.mb_offset < max_offset) {
 					this.mb_offset += 100;
@@ -987,7 +987,7 @@ _.mixin({
 							url : '%__' + name.toLowerCase() + '% IS ' + value
 						});
 					}
-					this.data.push.apply(this.data, _.orderBy(tmp, 'name'));
+					this.data = [...this.data, ...(_.orderBy(tmp, 'name'))];
 					this.add();
 				}
 				
@@ -1008,11 +1008,11 @@ _.mixin({
 				
 				this.add = (names) => {
 					if (names) {
-						this.data.push.apply(this.data, _.map(names, (item) => ({
+						this.data = [...this.data, ...(_.map(names, (item) => ({
 							name : item,
 							value : panel.tf('[%' + item + '%]'),
 							url : '%' + item + '% IS ' + panel.tf('[%' + item + '%]')
-						})));
+						})))];
 					} else {
 						this.data.push({name : '', value : '', url : ''});
 					}
