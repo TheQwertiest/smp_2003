@@ -411,9 +411,7 @@ _.mixin({
 		} else {
 			return _(collection)
 				.groupBy(keys[0])
-				.mapValues((values) => {
-					return _.nest(values, keys.slice(1));
-				})
+				.mapValues((values) => _.nest(values, keys.slice(1)))
 				.value();
 		}
 	},

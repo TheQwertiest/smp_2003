@@ -410,13 +410,11 @@ _.mixin({
 					this.filename = _.artistFolder(this.artist) + 'lastfm.artist.getSimilar.json';
 					if (_.isFile(this.filename)) {
 						this.data = _(_.get(_.jsonParseFile(this.filename), 'similarartists.artist', []))
-							.map((item) => {
-								return {
-									name : item.name,
-									width : _.textWidth(item.name, panel.fonts.normal),
-									url : this.properties.link.value == 0 ? item.url : 'artist HAS ' + item.name
-								};
-							})
+							.map((item) => ({
+								name : item.name,
+								width : _.textWidth(item.name, panel.fonts.normal),
+								url : this.properties.link.value == 0 ? item.url : 'artist HAS ' + item.name
+							}))
 							.value();
 						if (_.fileExpired(this.filename, ONE_DAY)) {
 							this.get();
@@ -489,16 +487,14 @@ _.mixin({
 					if (_.isFile(this.filename)) {
 						let data = _(_.jsonParseFile(this.filename))
 							.orderBy(['first-release-date', 'title'], ['desc', 'asc'])
-							.map((item) => {
-								return {
-									name : item.title,
-									width : _.textWidth(item.title, panel.fonts.normal),
-									url : 'https://musicbrainz.org/release-group/' + item.id,
-									date : item['first-release-date'].substring(0, 4),
-									primary : item['primary-type'],
-									secondary : item['secondary-types'].sort()[0] || null
-								};
-							})
+							.map((item) => ({
+								name : item.title,
+								width : _.textWidth(item.title, panel.fonts.normal),
+								url : 'https://musicbrainz.org/release-group/' + item.id,
+								date : item['first-release-date'].substring(0, 4),
+								primary : item['primary-type'],
+								secondary : item['secondary-types'].sort()[0] || null
+							}))
 							.nest(['primary', 'secondary'])
 							.value();
 						_.forEach(['Album', 'Single', 'EP', 'Other', 'Broadcast', 'null'], (primary) => {
@@ -579,11 +575,7 @@ _.mixin({
 				break;
 			case 'queue_viewer':
 				let items = plman.GetPlaybackQueueHandles();
-				this.data = _.map(this.tfo.EvalWithMetadbs(items), (item) => {
-					return {
-						name : item
-					};
-				});
+				this.data = _.map(this.tfo.EvalWithMetadbs(items), (item) => ({ name : item }));
 				break;
 			}
 			this.items = this.data.length;
@@ -1016,13 +1008,11 @@ _.mixin({
 				
 				this.add = (names) => {
 					if (names) {
-						this.data.push.apply(this.data, _.map(names, (item) => {
-							return {
-								name : item,
-								value : panel.tf('[%' + item + '%]'),
-								url : '%' + item + '% IS ' + panel.tf('[%' + item + '%]')
-							};
-						}));
+						this.data.push.apply(this.data, _.map(names, (item) => ({
+							name : item,
+							value : panel.tf('[%' + item + '%]'),
+							url : '%' + item + '% IS ' + panel.tf('[%' + item + '%]')
+						})));
 					} else {
 						this.data.push({name : '', value : '', url : ''});
 					}

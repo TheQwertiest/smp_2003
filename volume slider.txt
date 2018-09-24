@@ -30,7 +30,6 @@ function on_paint(gr) {
 	gr.FillPolygon(volume.c2, 1, points);
 }
 
-
 function on_size() {
 	volume.w = window.Width;
 	volume.h = window.Height;

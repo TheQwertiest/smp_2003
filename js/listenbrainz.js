@@ -78,9 +78,7 @@ _.mixin({
 				if (this.properties.genres.enabled && tags.genre) {
 					payload.track_metadata.additional_info.tags = _(tags.genre)
 						.take(50)
-						.map((item) => {
-							return item.substring(0, 64);
-						})
+						.map((item) => item.substring(0, 64))
 				}
 				
 				console.log(N, 'Submitting', _.q(tags.title), 'by', _.q(tags.artist));
