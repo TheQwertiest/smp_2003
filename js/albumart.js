@@ -5,9 +5,9 @@ _.mixin({
 				if (this.properties.shadow.enabled) {
 					_.drawImage(gr, this.images.shadow, this.x, this.y, this.w, this.h);
 				}
-				_.drawImage(gr, this.images.case_, this.x, this.y, this.w, this.h);
+				_.drawImage(gr, this.images.case, this.x, this.y, this.w, this.h);
 				if (this.img) {
-					const ratio = Math.min(this.w / this.images.case_.Width, this.h / this.images.case_.Height);
+					const ratio = Math.min(this.w / this.images.case.Width, this.h / this.images.case.Height);
 					const nw = 488 * ratio;
 					const nh = 476 * ratio;
 					const nx = this.x + Math.floor((this.w - (452 * ratio)) / 2);
@@ -197,7 +197,7 @@ _.mixin({
 		this.ids = ['Front', 'Back', 'Disc', 'Icon', 'Artist'];
 		this.images = {
 			shadow : _.img('cd\\shadow.png'),
-			case_ : _.img('cd\\case.png'),
+			case : _.img('cd\\case.png'),
 			semi : _.img('cd\\semi.png'),
 			gloss : _.img('cd\\gloss.png')
 		};
