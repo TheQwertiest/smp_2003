@@ -15,7 +15,7 @@ _.mixin({
 		if (_.isFolder(folder)) {
 			return fso.GetFolder(folder) + '\\';
 		} else {
-			folder = folders.artists + _.trunc(a, 64);
+			folder = folders.artists + _.truncate(a, 64);
 			_.createFolder(folder);
 			return fso.GetFolder(folder) + '\\';
 		}
@@ -67,7 +67,7 @@ _.mixin({
 	},
 	buttons : function () {
 		this.paint = (gr) => {
-			_.invoke(this.buttons, 'paint', gr);
+			_.invokeMap(this.buttons, 'paint', gr);
 		}
 		
 		this.move = (x, y) => {
@@ -241,7 +241,7 @@ _.mixin({
 			}
 		}
 		if (newest_first) {
-			return _.sortByOrder(files, (item) => {
+			return _.orderBy(files, (item) => {
 				return _.lastModified(item);
 			}, 'desc');
 		} else {

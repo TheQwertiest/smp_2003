@@ -216,7 +216,6 @@ _.mixin({
 						.forEach((item, i) => {
 							panel.s10.AppendMenuItem(MF_STRING, i + 1010, item.name);
 						})
-						.value();
 					panel.s10.AppendTo(panel.m, MF_STRING, 'Restore');
 					panel.m.AppendMenuSeparator();
 				}
@@ -402,7 +401,6 @@ _.mixin({
 						.forEach((item) => {
 							item.width = _.textWidth(item.name, panel.fonts.normal);
 						})
-						.value();
 				}
 				break;
 			case 'lastfm_info':
@@ -490,7 +488,7 @@ _.mixin({
 					this.filename = _.artistFolder(this.artist) + 'musicbrainz.releases.' + this.mb_id + '.json';
 					if (_.isFile(this.filename)) {
 						let data = _(_.jsonParseFile(this.filename))
-							.sortByOrder(['first-release-date', 'title'], ['desc', 'asc'])
+							.orderBy(['first-release-date', 'title'], ['desc', 'asc'])
 							.map((item) => {
 								return {
 									name : item.title,
@@ -997,7 +995,7 @@ _.mixin({
 							url : '%__' + name.toLowerCase() + '% IS ' + value
 						});
 					}
-					this.data.push.apply(this.data, _.sortByOrder(tmp, 'name'));
+					this.data.push.apply(this.data, _.orderBy(tmp, 'name'));
 					this.add();
 				}
 				

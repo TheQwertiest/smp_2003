@@ -81,7 +81,6 @@ _.mixin({
 						.map((item) => {
 							return item.substring(0, 64);
 						})
-						.value();
 				}
 				
 				console.log(N, 'Submitting', _.q(tags.title), 'by', _.q(tags.artist));

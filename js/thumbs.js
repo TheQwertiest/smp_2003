@@ -521,7 +521,6 @@ _.mixin({
 					const filename = base + url.substring(url.lastIndexOf('/') + 1) + '.jpg';
 					_.runCmd('cscript //nologo ' + _.q(this.vbs_file) + ' ' + _.q(url) + ' ' + _.q(filename), false);
 				})
-				.value();
 		}
 		
 		this.interval_func = () => {

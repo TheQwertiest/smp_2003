@@ -293,7 +293,6 @@ _.mixin({
 						.filter({className : 'text'})
 						.map('innerText')
 						.stripTags()
-						.value();
 					console.log(N, content.length ? 'A review was found and saved.' : 'No review was found on the page for this album.');
 					if (_.save(f, content)) {
 						this.artist = '';
@@ -314,7 +313,6 @@ _.mixin({
 									return false;
 								}
 							})
-							.value();
 						if (this.allmusic_url.length) {
 							console.log(N, 'A page was found for ' + _.q(this.album) + '. Now checking for review...');
 							this.get();
