@@ -78,7 +78,7 @@ _.mixin({
 				if (this.properties.genres.enabled && tags.genre) {
 					payload.track_metadata.additional_info.tags = _(tags.genre)
 						.take(50)
-						.map(function (item) {
+						.map((item) => {
 							return item.substring(0, 64);
 						})
 						.value();

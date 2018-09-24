@@ -213,7 +213,7 @@ _.mixin({
 				if (this.deleted_items.length) {
 					_(this.deleted_items)
 						.take(8)
-						.forEach(function (item, i) {
+						.forEach((item, i) => {
 							panel.s10.AppendMenuItem(MF_STRING, i + 1010, item.name);
 						})
 						.value();
@@ -399,7 +399,7 @@ _.mixin({
 			case 'autoplaylists':
 				if (_.isFile(this.filename)) {
 					this.data = _(_.jsonParseFile(this.filename))
-						.forEach(function (item) {
+						.forEach((item) => {
 							item.width = _.textWidth(item.name, panel.fonts.normal);
 						})
 						.value();
@@ -468,7 +468,7 @@ _.mixin({
 					if (_.isFile(this.filename)) {
 						this.data = _(_.get(_.jsonParseFile(this.filename), 'recenttracks.track', []))
 							.filter('date')
-							.map(function (item) {
+							.map((item) => {
 								const name = item.artist['#text'] + ' - ' + item.name;
 								return {
 									name : name,
@@ -491,7 +491,7 @@ _.mixin({
 					if (_.isFile(this.filename)) {
 						let data = _(_.jsonParseFile(this.filename))
 							.sortByOrder(['first-release-date', 'title'], ['desc', 'asc'])
-							.map(function (item) {
+							.map((item) => {
 								return {
 									name : item.title,
 									width : _.textWidth(item.title, panel.fonts.normal),
