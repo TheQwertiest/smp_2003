@@ -24,7 +24,7 @@ _.mixin({
 				return;
 			}
 			
-			var single = listen_type == 'single';
+			const single = listen_type == 'single';
 			
 			if (!_.isUUID(this.token)) {
 				return console.log(N, 'Token invalid/not set.');
@@ -37,7 +37,7 @@ _.mixin({
 				return;
 			}
 			
-			var tags = this.get_tags(metadb);
+			let tags = this.get_tags(metadb);
 			
 			if (!tags.artist || !tags.title) {
 				if (single) {
@@ -46,7 +46,7 @@ _.mixin({
 				return;
 			}
 			
-			var payload = {
+			let payload = {
 				track_metadata : {
 					artist_name : _.first(tags.artist),
 					release_name : _.first(tags.album),
@@ -95,12 +95,12 @@ _.mixin({
 			if (this.cache_is_bad) {
 				return;
 			}
-			var payload = _.take(this.open_cache(), this.max_listens);
+			let payload = _.take(this.open_cache(), this.max_listens);
 			this.post(payload, 'import');
 		}
 		
 		this.post = (payload, listen_type) => {
-			var data = {
+			let data = {
 				listen_type : listen_type,
 				payload : payload
 			}
@@ -109,10 +109,11 @@ _.mixin({
 			this.xmlhttp.send(JSON.stringify(data));
 			this.xmlhttp.onreadystatechange = () => {
 				if (this.xmlhttp.readyState == 4) {
+					let response;
 					switch (listen_type) {
 					case 'playing_now':
 						if (this.xmlhttp.responseText) {
-							var response = _.jsonParse(this.xmlhttp.responseText);
+							response = _.jsonParse(this.xmlhttp.responseText);
 							if (response.status == 'ok') {
 								console.log(N, 'Playing now notification updated OK!');
 							}
@@ -120,7 +121,7 @@ _.mixin({
 						break;
 					case 'single':
 						if (this.xmlhttp.responseText) {
-							var response = _.jsonParse(this.xmlhttp.responseText);
+							response = _.jsonParse(this.xmlhttp.responseText);
 							if (response.status == 'ok') {
 								console.log(N, 'Listen submitted OK!');
 								// now would be a good time to retry any listens in the cache
@@ -149,7 +150,7 @@ _.mixin({
 						break;
 					case 'import':
 						if (this.xmlhttp.responseText) {
-							var response = _.jsonParse(this.xmlhttp.responseText);
+							response = _.jsonParse(this.xmlhttp.responseText);
 							if (response.status == 'ok') {
 								console.log(N, data.payload.length, 'cached listen(s) submitted OK!');
 								_.save(this.cache_file, JSON.stringify(_.drop(this.open_cache(), this.max_listens)));
@@ -175,7 +176,7 @@ _.mixin({
 		}
 		
 		this.cache = (data) => {
-			var tmp = this.open_cache();
+			let tmp = this.open_cache();
 			tmp.push(data.payload[0]);
 			console.log(N, 'Cache contains', tmp.length, 'listen(s).');
 			_.save(this.cache_file, JSON.stringify(tmp));
@@ -186,14 +187,14 @@ _.mixin({
 		}
 		
 		this.get_tags = (metadb) => {
-			var tmp = {};
-			var f = metadb.GetFileInfo();
-			for (var i = 0; i < f.MetaCount; i++) {
-				var name = f.MetaName(i).toLowerCase();
-				var key = this.mapping[name] || name;
+			let tmp = {};
+			let f = metadb.GetFileInfo();
+			for (let i = 0; i < f.MetaCount; i++) {
+				const name = f.MetaName(i).toLowerCase();
+				let key = this.mapping[name] || name;
 				tmp[key] = [];
-				for (var j = 0; j < f.MetaValueCount(i); j++) {
-					var value = f.MetaValue(i, j);
+				for (let j = 0; j < f.MetaValueCount(i); j++) {
+					let value = f.MetaValue(i, j);
 					if (key.indexOf('musicbrainz') == 0) {
 						// if Picard has written multiple MBIDs as a string, use the first one
 						value = value.substring(0, 36);
@@ -209,8 +210,8 @@ _.mixin({
 		}
 		
 		this.options = () => {
-			var flag = _.isUUID(this.token) && this.properties.listenbrainz.enabled ? MF_STRING : MF_GRAYED;
-			var m = window.CreatePopupMenu();
+			const flag = _.isUUID(this.token) && this.properties.listenbrainz.enabled ? MF_STRING : MF_GRAYED;
+			let m = window.CreatePopupMenu();
 			m.AppendMenuItem(MF_STRING, 1, 'Set token...');
 			m.AppendMenuSeparator();
 			m.AppendMenuItem(MF_STRING, 2, 'Set username...');
@@ -230,7 +231,7 @@ _.mixin({
 			const idx = m.TrackPopupMenu(this.x, this.y + this.size);
 			switch (idx) {
 			case 1:
-				var token = utils.InputBox(window.ID, 'Enter your token\n\nhttps://listenbrainz.org/user/import', window.Name, this.token);
+				const token = utils.InputBox(window.ID, 'Enter your token\n\nhttps://listenbrainz.org/user/import', window.Name, this.token);
 				if (token != this.token) {
 					this.token = token;
 					utils.WriteINI(this.ini_file, 'Listenbrainz', 'token', this.token);
@@ -238,7 +239,7 @@ _.mixin({
 				}
 				break;
 			case 2:
-				var username = utils.InputBox(window.ID, 'Enter your username.', window.Name, this.username);
+				const username = utils.InputBox(window.ID, 'Enter your username.', window.Name, this.username);
 				if (username != this.username) {
 					this.username = username;
 					utils.WriteINI(this.ini_file, 'Listenbrainz', 'username', this.username);

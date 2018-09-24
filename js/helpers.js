@@ -335,9 +335,7 @@ _.mixin({
 		let temp_gr = temp_bmp.GetGraphics();
 		let result = [];
 		_.forEach(value.split('\n'), (paragraph) => {
-			let lines = _.filter(temp_gr.EstimateLineWrap(paragraph, font, width), (item, i) => {
-				return i % 2 == 0;
-			});
+			let lines = _.filter(temp_gr.EstimateLineWrap(paragraph, font, width), (item, i) => i % 2 == 0);
 			result = [...result, ...(_.map(lines, _.trim))];
 		});
 		temp_bmp.ReleaseGraphics(temp_gr);
