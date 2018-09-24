@@ -249,7 +249,7 @@ _.mixin({
 			return files;
 		}
 	},
-	hacks () {
+	hacks : function () {
 		this.disable = () => {
 			this.uih.MainMenuState = this.MainMenuState.Show;
 			this.uih.FrameStyle = this.FrameStyle.Default;
