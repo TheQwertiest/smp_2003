@@ -5,9 +5,9 @@ include(fb.ProfilePath + 'smp_2003\\js\\panel.js');
 include(fb.ProfilePath + 'smp_2003\\js\\lastfm.js');
 include(fb.ProfilePath + 'smp_2003\\js\\text.js');
 
-let panel = new _.panel();
-let lastfm = new _.lastfm();
-let text = new _.text('lastfm_bio', LM, TM, 0, 0);
+let panel = new _panel();
+let lastfm = new _lastfm();
+let text = new _text('lastfm_bio', LM, TM, 0, 0);
 
 panel.item_focus_change();
 

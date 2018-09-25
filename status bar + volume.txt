@@ -8,21 +8,21 @@ window.MinHeight = window.MaxHeight = 18;
 let tfo = fb.TitleFormat('%__bitrate% kbps %codec% [%codec_profile% ][%__tool% ][%__tagtype% ]');
 
 let properties = {
-	name : new _.p('2K3.STATUS.SHOW.NAME', true),
-	count : new _.p('2K3.STATUS.SHOW.COUNT', true),
-	duration : new _.p('2K3.STATUS.SHOW.DURATION', true),
-	size : new _.p('2K3.STATUS.SHOW.SIZE', true),
-	background : new _.p('2K3.STATUS.BACKGROUND', _.RGB(240, 240, 240)),
-	text : new _.p('2K3.STATUS.TEXT', _.RGB(0, 0, 0))
+	name : new _p('2K3.STATUS.SHOW.NAME', true),
+	count : new _p('2K3.STATUS.SHOW.COUNT', true),
+	duration : new _p('2K3.STATUS.SHOW.DURATION', true),
+	size : new _p('2K3.STATUS.SHOW.SIZE', true),
+	background : new _p('2K3.STATUS.BACKGROUND', _RGB(240, 240, 240)),
+	text : new _p('2K3.STATUS.TEXT', _RGB(0, 0, 0))
 };
 
-let font = _.gdiFont('Segoe UI', 11);
+let font = _gdiFont('Segoe UI', 11);
 let ww = 0;
 let wh = 0;
 let right_text = '';
 let right_text_width = 0;
 
-let volume = new _.volume(0, 3, 100, font.Height - 9);
+let volume = new _volume(0, 3, 100, font.Height - 9);
 
 refresh();
 
@@ -43,7 +43,7 @@ function refresh() {
 		tmp.push(utils.FormatFileSize(items.CalcTotalSize()));
 	}
 	right_text = tmp.join(' :: ');
-	right_text_width = _.textWidth(right_text, font);
+	right_text_width = _textWidth(right_text, font);
 	window.Repaint();
 }
 

@@ -4,8 +4,8 @@ include(fb.ProfilePath + 'smp_2003\\js\\helpers.js');
 include(fb.ProfilePath + 'smp_2003\\js\\panel.js');
 include(fb.ProfilePath + 'smp_2003\\js\\albumart.js');
 
-let panel = new _.panel('custom_background');
-let albumart = new _.albumart(0, 0, 0, 0);
+let panel = new _panel('custom_background');
+let albumart = new _albumart(0, 0, 0, 0);
 
 panel.item_focus_change();
 

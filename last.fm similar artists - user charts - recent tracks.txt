@@ -5,9 +5,9 @@ include(fb.ProfilePath + 'smp_2003\\js\\panel.js');
 include(fb.ProfilePath + 'smp_2003\\js\\list.js');
 include(fb.ProfilePath + 'smp_2003\\js\\lastfm.js');
 
-let panel = new _.panel();
-let lastfm = new _.lastfm();
-let list = new _.list('lastfm_info', LM, TM, 0, 0);
+let panel = new _panel();
+let lastfm = new _lastfm();
+let list = new _list('lastfm_info', LM, TM, 0, 0);
 
 panel.item_focus_change();
 

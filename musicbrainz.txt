@@ -6,8 +6,8 @@ include(fb.ProfilePath + 'smp_2003\\js\\list.js');
 
 // This script requires 'musicbrainz_artistid' or 'musicbrainz artist id' tags present in your files.
 
-let panel = new _.panel();
-let list = new _.list('musicbrainz', LM, TM, 0, 0);
+let panel = new _panel();
+let list = new _list('musicbrainz', LM, TM, 0, 0);
 
 panel.item_focus_change();
 
