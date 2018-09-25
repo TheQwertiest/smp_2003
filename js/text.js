@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @constructor
  * @param {string} mode Allowed values: 'allmusic', 'lastfm_bio', 'text_reader'

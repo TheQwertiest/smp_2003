@@ -1,3 +1,5 @@
+'use strict';
+
 /// <reference path="../../user-components/foo_spider_monkey_panel/docs/js_doc/ActiveXObject.js" />
 /// <reference path="../../user-components/foo_spider_monkey_panel/docs/js_doc/Interfaces.js" />
 /// <reference path="../../user-components/foo_spider_monkey_panel/docs/js_doc/IUiHacks.js" />

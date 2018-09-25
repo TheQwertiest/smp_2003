@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @constructor
  * @param {string} mode Allowed values: 'autoplaylists', 'lastfm_info', 'musicbrainz', 'properties'

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @constructor
  * @param {boolean} [custom_background = false]
