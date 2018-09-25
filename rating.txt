@@ -11,8 +11,8 @@ Now supports 3 modes:
 3) Spider Monkey Panel 'Playback stats' database, configurable max limit, access via %smp_rating%. Bound to '%artist% - %title%' so common tracks across different albums will share the rating.
 */
 
-let panel = new _panel('custom_background');
-let rating = new _rating(0, 0, 24, _RGB(255, 128, 0)); // x, y, height, colour
+let panel = new _panel(true);
+let rating = new _rating(0, 0, 24, _RGB(255, 128, 0)); // x, y, size, colour
 
 panel.item_focus_change();
 

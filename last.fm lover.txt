@@ -20,7 +20,7 @@ let loved = _chrToImg(chars.heart_on, _RGB(255, 0, 0));
 let unloved = _chrToImg(chars.heart_off, _RGB(255, 0, 0));
 let info = _chrToImg(chars.info, _RGB(255, 0, 0));
 
-let panel = new _panel('custom_background');
+let panel = new _panel(true);
 let buttons = new _buttons();
 let lastfm = new _lastfm();
 

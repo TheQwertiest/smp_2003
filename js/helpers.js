@@ -32,6 +32,11 @@ _.mixin({
  * @param {number} w
  * @param {number} h
  * @param {object} img_src
+ * "normal" is required, "hover" is optional. Examples:
+ * 
+ * { normal : "c:\\path\\to\\normal.jpg" }
+ * 
+ * { normal : "c:\\path\\to\\normal.jpg", hover : "c:\\path\\to\\hover.jpg" }
  * @param {function} fn
  * @param {string} tiptext
  */
@@ -157,6 +162,7 @@ function _hacks () {
 }
 
 /**
+ * window.GetProperty / window.SetProperty helper
  * @constructor
  * @param {string} a Property name
  * @param {string|number|boolean} b Default value

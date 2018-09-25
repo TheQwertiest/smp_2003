@@ -1,6 +1,6 @@
 /**
  * @constructor
- * @param {string} mode
+ * @param {string} mode Allowed values: 'allmusic', 'lastfm_bio', 'text_reader'
  * @param {number} x
  * @param {number} y
  * @param {number} w

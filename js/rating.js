@@ -2,16 +2,15 @@
  * @constructor
  * @param {number} x
  * @param {number} y
- * @param {number} w
- * @param {number} h
+ * @param {number} size
  * @param {number} colour
  */
-function _rating(x, y, h, colour) {
+function _rating(x, y, size, colour) {
 	this.paint = (gr) => {
 		if (panel.metadb) {
 			gr.SetTextRenderingHint(4);
 			for (let i = 0; i < this.get_max(); i++) {
-				gr.DrawString(i + 1 > (this.hover ? this.hrating : this.rating) ? chars.rating_off : chars.rating_on, this.font, this.colour, this.x + (i * this.h), this.y, this.h, this.h, SF_CENTRE);
+				gr.DrawString(i + 1 > (this.hover ? this.hrating : this.rating) ? chars.rating_off : chars.rating_on, this.font, this.colour, this.x + (i * this.size), this.y, this.size, this.size, SF_CENTRE);
 			}
 		}
 	}
@@ -27,7 +26,7 @@ function _rating(x, y, h, colour) {
 	}
 	
 	this.trace = (x, y) => {
-		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
+		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.size;
 	}
 	
 	this.move = (x, y) => {
@@ -35,8 +34,8 @@ function _rating(x, y, h, colour) {
 			if (panel.metadb) {
 				_tt(this.tiptext);
 				this.hover = true;
-				this.hrating = Math.ceil((x - this.x) / this.h);
-				window.RepaintRect(this.x, this.y, this.w, this.h);
+				this.hrating = Math.ceil((x - this.x) / this.size);
+				window.RepaintRect(this.x, this.y, this.w, this.size);
 			}
 			return true;
 		} else {
@@ -49,7 +48,7 @@ function _rating(x, y, h, colour) {
 		if (this.hover) {
 			_tt('');
 			this.hover = false;
-			window.RepaintRect(this.x, this.y, this.w, this.h);
+			window.RepaintRect(this.x, this.y, this.w, this.size);
 		}
 	}
 	
@@ -90,7 +89,7 @@ function _rating(x, y, h, colour) {
 			this.properties.max.value = tmp || 5;
 			break;
 		}
-		this.w = this.h * this.get_max();
+		this.w = this.size * this.get_max();
 		panel.item_focus_change();
 	}
 	
@@ -103,8 +102,8 @@ function _rating(x, y, h, colour) {
 			const idx = f.MetaFind(this.properties.tag.value);
 			const ret = idx > -1 ? f.MetaValue(idx, 0) : 0;
 			return ret;
-		case 3: // JScript Panel DB
-			return panel.tf('$if2(%jsp_rating%,0)');
+		case 3: // Spider Monkey Panel DB
+			return panel.tf('$if2(%smp_rating%,0)');
 		default:
 			return 0;
 		}
@@ -123,7 +122,7 @@ function _rating(x, y, h, colour) {
 			handles.Add(panel.metadb);
 			handles.UpdateFileInfoFromJSON(JSON.stringify(obj));
 			break;
-		case 3: // JScript Panel db
+		case 3: // Spider Monkey Panel DB
 			panel.metadb.SetRating(this.hrating == this.rating ? 0 : this.hrating);
 			panel.metadb.RefreshStats();
 			break;
@@ -135,27 +134,27 @@ function _rating(x, y, h, colour) {
 	}
 	
 	this.properties = {
-		mode : new _p('2K3.RATING.MODE', 0), // 0 not set 1 foo_playcount 2 file tag 3 JScript Panel db
-		max : new _p('2K3.RATING.MAX', 5), // only use for file tag/JScript Panel db mode
+		mode : new _p('2K3.RATING.MODE', 0), // 0 not set 1 foo_playcount 2 file tag 3 Spider Monkey Panel DB
+		max : new _p('2K3.RATING.MAX', 5), // only use for file tag/Spider Monkey Panel DB
 		tag: new _p('2K3.RATING.TAG', 'rating')
 	};
 	this.x = x;
 	this.y = y;
-	this.h = _scale(h);
-	this.w = this.h * this.get_max();
+	this.size = _scale(size);
+	this.w = this.size * this.get_max();
 	this.colour = colour;
 	this.hover = false;
 	this.rating = 0;
 	this.hrating = 0;
-	this.font = gdi.Font('FontAwesome', this.h - 2);
-	this.modes = ['Not Set', 'foo_playcount', 'File Tag', 'JScript Panel DB'];
+	this.font = gdi.Font('FontAwesome', this.size - 2);
+	this.modes = ['Not Set', 'foo_playcount', 'File Tag', 'Spider Monkey Panel DB'];
 	this.foo_playcount = _cc('foo_playcount');
 	window.SetTimeout(() => {
 		if (this.properties.mode.value == 1 && !this.foo_playcount) { // if mode is set to 1 (foo_playcount) but component is missing, reset to 0.
 			this.properties.mode.value = 0;
 		}
 		if (this.properties.mode.value == 0) {
-			fb.ShowPopupMessage('This script has now been updated and supports 3 different modes.\n\nAs before, you can use foo_playcount which is limited to 5 stars.\n\nThe 2nd option is writing to your file tags. You can choose the tag name and a max value via the right click menu.\n\nLastly, a new "Playback Stats" database has been built into JScript Panel. It is bound to just "%artist% - %title%". This uses %jsp_rating% which can be accessed via title formatting in all other components/search dialogs. This also supports a custom max value.\n\nAll options are available on the right click menu. If you do not see the new options when right clicking, make sure you have the latest "rating.txt" imported from the "samples\\complete" folder.', window.Name);
+			fb.ShowPopupMessage('This script has now been updated and supports 3 different modes.\n\nAs before, you can use foo_playcount which is limited to 5 stars.\n\nThe 2nd option is writing to your file tags. You can choose the tag name and a max value via the right click menu.\n\nLastly, a new "Playback Stats" database has been built into Spider Monkey Panel. It is bound to just "%artist% - %title%". This uses %smp_rating% which can be accessed via title formatting in all other components/search dialogs. This also supports a custom max value.\n\nAll options are available on the right click menu. If you do not see the new options when right clicking, make sure you have the latest "rating.txt" imported from the "samples\\complete" folder.', window.Name);
 		}
 	}, 500);
 }

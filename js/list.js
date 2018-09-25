@@ -1,6 +1,6 @@
 /**
  * @constructor
- * @param {string} mode
+ * @param {string} mode Allowed values: 'autoplaylists', 'lastfm_info', 'musicbrainz', 'properties'
  * @param {number} x
  * @param {number} y
  * @param {number} w

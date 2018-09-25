@@ -1,7 +1,8 @@
 /**
  * @constructor
+ * @param {boolean} [custom_background = false]
  */
-function _panel() {
+function _panel(custom_background = false) {
 	this.item_focus_change = () => {
 		if (this.metadb_func) {
 			if (this.selection.value == 0) {
@@ -173,7 +174,7 @@ function _panel() {
 	if (this.metadb_func) {
 		this.selection = new _p('2K3.PANEL.SELECTION', 0);
 	}
-	if (arguments[0] == 'custom_background') {
+	if (custom_background) {
 		this.custom_background = true;
 		this.colours.mode = new _p('2K3.PANEL.COLOURS.MODE', 0);
 		this.colours.custom_background = new _p('2K3.PANEL.COLOURS.CUSTOM.BACKGROUND', _RGB(0, 0, 0));
