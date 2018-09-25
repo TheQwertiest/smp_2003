@@ -251,7 +251,7 @@ function _text(mode, x, y, w, h) {
 			this.lines = this.content.split('\n');
 			break;
 		default:
-			this.lines = _lineWrap(this.content, panel.fonts.normal, this.w);
+			this.lines = _lineWrap(this.content.split('\n'), panel.fonts.normal, this.w);
 			break;
 		}
 	}

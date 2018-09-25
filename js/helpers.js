@@ -476,16 +476,15 @@ function _lastModified (file) {
 }
 
 function _lineWrap (value, font, width) {
-	let temp_bmp = gdi.CreateImage(1, 1);
-	let temp_gr = temp_bmp.GetGraphics();
 	let result = [];
-	_.forEach(value.split('\n'), (paragraph) => {
-		let lines = _.filter(temp_gr.EstimateLineWrap(paragraph, font, width), (item, i) => i % 2 == 0);
-		result = [...result, ...(_.map(lines, _.trim))];
+	_.forEach(value, (paragraph) => {
+		if (paragraph.length < 5) {
+			result.push(paragraph);
+		} else {
+			let lines = _.filter(_gr.EstimateLineWrap(paragraph, font, width), (item, i) => i % 2 == 0);
+			result = [...result, ...(_.map(lines, _.trim))];
+		}
 	});
-	temp_bmp.ReleaseGraphics(temp_gr);
-	temp_gr = null;
-	temp_bmp = null;
 	return result;
 }
 
@@ -636,13 +635,7 @@ function _tagged (value) {
 }
 
 function _textWidth (value, font) {
-	let temp_bmp = gdi.CreateImage(1, 1);
-	let temp_gr = temp_bmp.GetGraphics();
-	const width = temp_gr.CalcTextWidth(value, font);
-	temp_bmp.ReleaseGraphics(temp_gr);
-	temp_gr = null;
-	temp_bmp = null;
-	return width;
+	return _gr.CalcTextWidth(value, font);
 }
 
 function _tf (t, metadb) {
@@ -723,6 +716,9 @@ const DPI = WshShell.RegRead('HKCU\\Control Panel\\Desktop\\WindowMetrics\\Appli
 
 const LM = _scale(5);
 const TM = _scale(20);
+
+let _bmp = gdi.CreateImage(1, 1);
+let _gr = _bmp.GetGraphics();
 
 let tooltip = window.CreateTooltip('Segoe UI', _scale(12));
 tooltip.SetMaxWidth(1200);
