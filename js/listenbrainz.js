@@ -5,7 +5,7 @@ function _listenbrainz (x, y, size) {
 		}
 		this.metadb = metadb;
 		this.time_elapsed = 0;
-		this.timestamp = _.ts();
+		this.timestamp = _ts();
 		this.target_time = this.properties.listenbrainz.enabled ? Math.min(Math.ceil(fb.PlaybackLength / 2), 240) : -1;
 	}
 	
@@ -25,7 +25,7 @@ function _listenbrainz (x, y, size) {
 		
 		const single = listen_type == 'single';
 		
-		if (!_.isUUID(this.token)) {
+		if (!_isUUID(this.token)) {
 			return console.log(N, 'Token invalid/not set.');
 		}
 		
@@ -80,7 +80,7 @@ function _listenbrainz (x, y, size) {
 					.map((item) => item.substring(0, 64))
 			}
 			
-			console.log(N, 'Submitting', _.q(tags.title), 'by', _.q(tags.artist));
+			console.log(N, 'Submitting', _q(tags.title), 'by', _q(tags.artist));
 			
 			if (this.properties.show.enabled) {
 				console.log(JSON.stringify(payload, null, 4));
@@ -152,7 +152,7 @@ function _listenbrainz (x, y, size) {
 						response = _jsonParse(this.xmlhttp.responseText);
 						if (response.status == 'ok') {
 							console.log(N, data.payload.length, 'cached listen(s) submitted OK!');
-							_.save(this.cache_file, JSON.stringify(_.drop(this.open_cache(), this.max_listens)));
+							_save(this.cache_file, JSON.stringify(_.drop(this.open_cache(), this.max_listens)));
 							if (this.open_cache().length) {
 								window.SetTimeout(() => {
 									this.retry();
@@ -178,7 +178,7 @@ function _listenbrainz (x, y, size) {
 		let tmp = this.open_cache();
 		tmp.push(data.payload[0]);
 		console.log(N, 'Cache contains', tmp.length, 'listen(s).');
-		_.save(this.cache_file, JSON.stringify(tmp));
+		_save(this.cache_file, JSON.stringify(tmp));
 	}
 	
 	this.open_cache = () => {
@@ -197,7 +197,7 @@ function _listenbrainz (x, y, size) {
 				if (key.indexOf('musicbrainz') == 0) {
 					// if Picard has written multiple MBIDs as a string, use the first one
 					value = value.substring(0, 36);
-					if (_.isUUID(value)) {
+					if (_isUUID(value)) {
 						tmp[key].push(value);
 					}
 				} else {
@@ -209,7 +209,7 @@ function _listenbrainz (x, y, size) {
 	}
 	
 	this.options = () => {
-		const flag = _.isUUID(this.token) && this.properties.listenbrainz.enabled ? MF_STRING : MF_GRAYED;
+		const flag = _isUUID(this.token) && this.properties.listenbrainz.enabled ? MF_STRING : MF_GRAYED;
 		let m = window.CreatePopupMenu();
 		m.AppendMenuItem(MF_STRING, 1, 'Set token...');
 		m.AppendMenuSeparator();
@@ -245,7 +245,7 @@ function _listenbrainz (x, y, size) {
 			}
 			break;
 		case 3:
-			_.run('https://listenbrainz.org/user/' + this.username);
+			_run('https://listenbrainz.org/user/' + this.username);
 			break;
 		case 4:
 			this.properties.listenbrainz.toggle();
@@ -264,7 +264,7 @@ function _listenbrainz (x, y, size) {
 	}
 	
 	this.update_button = () => {
-		buttons.buttons.listenbrainz = new _button(this.x, this.y, this.size, this.size, {normal : this.properties.listenbrainz.enabled && _.isUUID(this.token) ? 'misc\\listenbrainz_active.png' : 'misc\\listenbrainz_inactive.png'}, () => { this.options(); }, 'Listenbrainz Options');
+		buttons.buttons.listenbrainz = new _button(this.x, this.y, this.size, this.size, {normal : this.properties.listenbrainz.enabled && _isUUID(this.token) ? 'misc\\listenbrainz_active.png' : 'misc\\listenbrainz_inactive.png'}, () => { this.options(); }, 'Listenbrainz Options');
 		window.RepaintRect(this.x, this.y, this.size, this.size);
 	}
 	

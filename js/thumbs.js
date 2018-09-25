@@ -97,7 +97,7 @@ function _thumbs() {
 			if (this.overlay) {
 				_.drawOverlay(gr, this.x, this.y, this.w, this.h);
 				this.image_xywh = _drawImage(gr, this.images[this.image], 20, 20, panel.w - 40, panel.h - 40, image.centre);
-				this.close_btn.paint(gr, _.RGB(230, 230, 230));
+				this.close_btn.paint(gr, _RGB(230, 230, 230));
 			} else {
 				this.image_xywh = [];
 			}
@@ -108,7 +108,7 @@ function _thumbs() {
 			} else {
 				this.image_xywh = _drawImage(gr, this.images[this.image], 0, 0, panel.w, panel.h, this.properties.aspect.value);
 			}
-			_.drawOverlay(gr, this.x, this.y, this.w, this.h);
+			_drawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, this.w, this.h, 0, this.offset * this.properties.px.value, this.w, this.h);
 			break;
 		case this.properties.mode.value == 2: // right
@@ -117,7 +117,7 @@ function _thumbs() {
 			} else {
 				this.image_xywh = _drawImage(gr, this.images[this.image], 0, 0, panel.w, panel.h, this.properties.aspect.value);
 			}
-			_.drawOverlay(gr, this.x, this.y, this.w, this.h);
+			_drawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, this.w, this.h, 0, this.offset * this.properties.px.value, this.w, this.h);
 			break;
 		case this.properties.mode.value == 3: // top
@@ -126,7 +126,7 @@ function _thumbs() {
 			} else {
 				this.image_xywh = _drawImage(gr, this.images[this.image], 0, 0, panel.w, panel.h, this.properties.aspect.value);
 			}
-			_.drawOverlay(gr, this.x, this.y, this.w, this.h);
+			_drawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, this.w, this.h, this.offset * this.properties.px.value, 0, this.w, this.h);
 			break;
 		case this.properties.mode.value == 4: // bottom
@@ -135,7 +135,7 @@ function _thumbs() {
 			} else {
 				this.image_xywh = _drawImage(gr, this.images[this.image], 0, 0, panel.w, panel.h, this.properties.aspect.value);
 			}
-			_.drawOverlay(gr, this.x, this.y, this.w, this.h);
+			_drawOverlay(gr, this.x, this.y, this.w, this.h);
 			gr.DrawImage(this.img, this.x, this.y, this.w, this.h, this.offset * this.properties.px.value, 0, this.w, this.h);
 			break;
 		}
@@ -156,7 +156,7 @@ function _thumbs() {
 					return;
 				}
 				this.artist = temp_artist;
-				this.folder = _.artistFolder(this.artist);
+				this.folder = _artistFolder(this.artist);
 			}
 		} else {
 			this.artist = '';
@@ -287,7 +287,7 @@ function _thumbs() {
 	
 	this.lbtn_dblclk = (x, y) => {
 		if (this.image_xywh_trace(x, y)) {
-			_.run(this.files[this.image]);
+			_run(this.files[this.image]);
 		}
 	}
 	
@@ -352,7 +352,7 @@ function _thumbs() {
 			panel.m.AppendMenuItem(MF_STRING, 1531, 'Delete image');
 			panel.m.AppendMenuSeparator();
 		}
-		panel.m.AppendMenuItem(_.isFolder(this.folder) ? MF_STRING : MF_GRAYED, 1540, 'Open containing folder');
+		panel.m.AppendMenuItem(_isFolder(this.folder) ? MF_STRING : MF_GRAYED, 1540, 'Open containing folder');
 		panel.m.AppendMenuSeparator();
 	}
 	
@@ -432,17 +432,17 @@ function _thumbs() {
 			this.set_default('');
 			break;
 		case 1530:
-			_.run(this.files[this.image]);
+			_run(this.files[this.image]);
 			break;
 		case 1531:
-			_.recycleFile(this.files[this.image]);
+			_recycleFile(this.files[this.image]);
 			this.update();
 			break;
 		case 1540:
 			if (this.files.length) {
-				_.explorer(this.files[this.image]);
+				_explorer(this.files[this.image]);
 			} else {
-				_.run(this.folder);
+				_run(this.folder);
 			}
 			break;
 		}
@@ -468,9 +468,9 @@ function _thumbs() {
 	
 	this.update = () => {
 		this.image = 0;
-		this.files = _.getFiles(this.folder, this.exts, this.properties.sort.value == 1);
+		this.files = _getFiles(this.folder, this.exts, this.properties.sort.value == 1);
 		if (this.properties.source.value == 1 && this.files.length > 1) {
-			this.default_file = this.folder + utils.ReadINI(this.ini_file, 'Defaults', _.fbSanitise(this.artist));
+			this.default_file = this.folder + utils.ReadINI(this.ini_file, 'Defaults', _fbSanitise(this.artist));
 			const tmp = _.indexOf(this.files, this.default_file);
 			if (tmp > -1) {
 				this.files.splice(tmp, 1);
@@ -488,15 +488,15 @@ function _thumbs() {
 	}
 	
 	this.set_default = (t) => {
-		utils.WriteINI(this.ini_file, 'Defaults', _.fbSanitise(this.artist), t);
+		utils.WriteINI(this.ini_file, 'Defaults', _fbSanitise(this.artist), t);
 		this.update();
 	}
 	
 	this.download = () => {
-		if (!_.tagged(this.artist)) {
+		if (!_tagged(this.artist)) {
 			return;
 		}
-		const base = this.folder + _.fbSanitise(this.artist) + '_';
+		const base = this.folder + _fbSanitise(this.artist) + '_';
 		this.xmlhttp.open('GET', 'https://www.last.fm/music/' + encodeURIComponent(this.artist) + '/+images', true);
 		this.xmlhttp.setRequestHeader('If-Modified-Since', 'Thu, 01 Jan 1970 00:00:00 GMT');
 		this.xmlhttp.send();
@@ -512,13 +512,13 @@ function _thumbs() {
 	}
 	
 	this.success = (base) => {
-		_(_.getElementsByTagName(this.xmlhttp.responseText, 'img'))
+		_(_getElementsByTagName(this.xmlhttp.responseText, 'img'))
 			.filter({className : 'image-list-image'})
 			.take(this.properties.limit.value)
 			.forEach((item) => {
 				const url = item.src.replace('avatar170s/', '');
 				const filename = base + url.substring(url.lastIndexOf('/') + 1) + '.jpg';
-				_.runCmd('cscript //nologo ' + _.q(this.vbs_file) + ' ' + _.q(url) + ' ' + _.q(filename), false);
+				_runCmd('cscript //nologo ' + _q(this.vbs_file) + ' ' + _q(url) + ' ' + _q(filename), false);
 			})
 	}
 	
@@ -531,7 +531,7 @@ function _thumbs() {
 			}
 			window.Repaint();
 		}
-		if (this.properties.source.value == 1 && this.time % 3 == 0 && _.getFiles(this.folder, this.exts).length != this.files.length) {
+		if (this.properties.source.value == 1 && this.time % 3 == 0 && _getFiles(this.folder, this.exts).length != this.files.length) {
 			this.update();
 		}
 	}
