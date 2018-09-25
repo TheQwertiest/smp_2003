@@ -1,5 +1,18 @@
 'use strict';
 
+_.mixin({
+	nest (collection, keys) {
+		if (!keys.length) {
+			return collection;
+		} else {
+			return _(collection)
+				.groupBy(keys[0])
+				.mapValues((values) => _.nest(values, keys.slice(1)))
+				.value();
+		}
+	}
+});
+
 /**
  * @constructor
  * @param {string} mode Allowed values: 'autoplaylists', 'lastfm_info', 'musicbrainz', 'properties'

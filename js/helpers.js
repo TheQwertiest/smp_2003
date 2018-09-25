@@ -14,19 +14,6 @@ function on_script_unload() {
 	_tt('');
 }
 
-_.mixin({
-	nest (collection, keys) {
-		if (!keys.length) {
-			return collection;
-		} else {
-			return _(collection)
-				.groupBy(keys[0])
-				.mapValues((values) => _.nest(values, keys.slice(1)))
-				.value();
-		}
-	}
-});
-
 /**
  * @constructor
  * @param {number} x
@@ -42,7 +29,7 @@ _.mixin({
  * @param {function} fn
  * @param {string} tiptext
  */
-function _button (x, y, w, h, img_src, fn, tiptext) {
+function _button(x, y, w, h, img_src, fn, tiptext) {
 	this.paint = (gr) => {
 		if (this.img) {
 			_drawImage(gr, this.img, this.x, this.y, this.w, this.h);
@@ -83,7 +70,7 @@ function _button (x, y, w, h, img_src, fn, tiptext) {
 /**
  * @constructor
  */
-function _buttons () {
+function _buttons() {
 	this.paint = (gr) => {
 		_.invokeMap(this.buttons, 'paint', gr);
 	}
@@ -134,7 +121,7 @@ function _buttons () {
 /**
  * @constructor
  */
-function _hacks () {
+function _hacks() {
 	this.disable = () => {
 		this.uih.MainMenuState = this.MainMenuState.Show;
 		this.uih.FrameStyle = this.FrameStyle.Default;
@@ -169,7 +156,7 @@ function _hacks () {
  * @param {string} a Property name
  * @param {string|number|boolean} b Default value
  */
-function _p (a, b) {
+function _p(a, b) {
 	Object.defineProperty(this, _.isBoolean(b) ? 'enabled' : 'value', {
 		get() {
 			return this.b;
@@ -199,7 +186,7 @@ function _p (a, b) {
  * @param {boolean} v
  * @param {function} fn
  */
-function _sb (t, x, y, w, h, v, fn) {
+function _sb(t, x, y, w, h, v, fn) {
 	this.paint = (gr, colour) => {
 		gr.SetTextRenderingHint(4);
 		if (this.v()) {
@@ -242,7 +229,7 @@ function _sb (t, x, y, w, h, v, fn) {
 	this.font = gdi.Font('FontAwesome', this.h);
 }
 
-function _artistFolder (artist) {
+function _artistFolder(artist) {
 	const a = _fbSanitise(artist);
 	let folder = folders.artists + a;
 	if (_isFolder(folder)) {
@@ -254,7 +241,7 @@ function _artistFolder (artist) {
 	}
 }
 
-function _blendColours (c1, c2, f) {
+function _blendColours(c1, c2, f) {
 	c1 = _toRGB(c1);
 	c2 = _toRGB(c2);
 	const r = Math.round(c1[0] + f * (c2[0] - c1[0]));
@@ -263,11 +250,11 @@ function _blendColours (c1, c2, f) {
 	return _RGB(r, g, b);
 }
 
-function _cc (name) {
+function _cc(name) {
 	return utils.CheckComponent(name, true);
 }
 
-function _chrToImg (chr, colour) {
+function _chrToImg(chr, colour) {
 	const size = 96;
 	let temp_bmp = gdi.CreateImage(size, size);
 	let temp_gr = temp_bmp.GetGraphics();
@@ -278,13 +265,13 @@ function _chrToImg (chr, colour) {
 	return temp_bmp;
 }
 
-function _createFolder (folder) {
+function _createFolder(folder) {
 	if (!_isFolder(folder)) {
 		fso.CreateFolder(folder);
 	}
 }
 
-function _deleteFile (file) {
+function _deleteFile(file) {
 	if (_isFile(file)) {
 		try {
 			fso.DeleteFile(file);
@@ -293,7 +280,7 @@ function _deleteFile (file) {
 	}
 }
 
-function _drawImage (gr, img, src_x, src_y, src_w, src_h, aspect, border, alpha) {
+function _drawImage(gr, img, src_x, src_y, src_w, src_h, aspect, border, alpha) {
 	if (!img) {
 		return [];
 	}
@@ -340,16 +327,16 @@ function _drawImage (gr, img, src_x, src_y, src_w, src_h, aspect, border, alpha)
 	return [src_x, src_y, src_w, src_h];
 }
 
-function _drawOverlay (gr, x, y, w, h) {
+function _drawOverlay(gr, x, y, w, h) {
 	gr.FillGradRect(x, y, w, h, 90, _RGBA(0, 0, 0, 230), _RGBA(0, 0, 0, 200));
 }
 
-function _explorer (file) {
+function _explorer(file) {
 	if (_isFile(file)) {
 		WshShell.Run('explorer /select,' + _q(file));
 	}
 }
-function _fbDate (t) {
+function _fbDate(t) {
 	const offset = new Date().getTimezoneOffset() * 60;
 	if (typeof t == 'number') {
 		t -= offset;
@@ -361,31 +348,31 @@ function _fbDate (t) {
 	}
 }
 
-function _fbEscape (value) {
+function _fbEscape(value) {
 	return value.replace(/'/g, "''").replace(/[\(\)\[\],$]/g, "'$&'");
 }
 
-function _fbSanitise (value) {
+function _fbSanitise(value) {
 	return value.replace(/[\/\\|:]/g, '-').replace(/\*/g, 'x').replace(/"/g, "''").replace(/[<>]/g, '_').replace(/\?/g, '').replace(/(?! )\s/g, '');
 }
 
-function _fileExpired (file, period) {
+function _fileExpired(file, period) {
 	return _.now() - _lastModified(file) > period;
 }
 
-function _formatNumber (number, separator) {
+function _formatNumber(number, separator) {
 	return number.replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
-function _gdiFont (name, size, style) {
+function _gdiFont(name, size, style) {
 	return gdi.Font(name, _scale(size), style);
 }
 
-function _getClipboardData () {
+function _getClipboardData() {
 	return doc.parentWindow.clipboardData.getData('Text');
 }
 
-function _getElementsByTagName (value, tag) {
+function _getElementsByTagName(value, tag) {
 	doc.open();
 	let div = doc.createElement('div');
 	div.innerHTML = value;
@@ -394,7 +381,7 @@ function _getElementsByTagName (value, tag) {
 	return data;
 }
 
-function _getFiles (folder, exts, newest_first) {
+function _getFiles(folder, exts, newest_first) {
 	let files = [];
 	if (_isFolder(folder)) {
 		let e = new Enumerator(fso.GetFolder(folder).Files);
@@ -415,7 +402,7 @@ function _getFiles (folder, exts, newest_first) {
 	}
 }
 
-function _help (x, y, flags) {
+function _help(x, y, flags) {
 	let m = window.CreatePopupMenu();
 	_.forEach(ha_links, (item, i) => {
 		m.AppendMenuItem(MF_STRING, i + 100, item[0]);
@@ -438,7 +425,7 @@ function _help (x, y, flags) {
 	}
 }
 
-function _img (value) {
+function _img(value) {
 	if (_isFile(value)) {
 		return gdi.Image(value);
 	} else {
@@ -446,19 +433,19 @@ function _img (value) {
 	}
 }
 
-function _isFile (file) {
+function _isFile(file) {
 	return _.isString(file) ? fso.FileExists(file) : false;
 }
 
-function _isFolder (folder) {
+function _isFolder(folder) {
 	return _.isString(folder) ? fso.FolderExists(folder) : false;
 }
 
-function _isUUID (value) {
+function _isUUID(value) {
 	const re = /^[0-9a-f]{8}-[0-9a-f]{4}-[345][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
 	return re.test(value);
 }
-function _jsonParse (value) {
+function _jsonParse(value) {
 	try {
 		let data = JSON.parse(value);
 		return data;
@@ -467,15 +454,15 @@ function _jsonParse (value) {
 	}
 }
 
-function _jsonParseFile (file) {
+function _jsonParseFile(file) {
 	return _jsonParse(_open(file));
 }
 
-function _lastModified (file) {
+function _lastModified(file) {
 	return Date.parse(fso.GetFile(file).DateLastModified);
 }
 
-function _lineWrap (value, font, width) {
+function _lineWrap(value, font, width) {
 	let result = [];
 	_.forEach(value, (paragraph) => {
 		if (paragraph.length < 5) {
@@ -488,12 +475,12 @@ function _lineWrap (value, font, width) {
 	return result;
 }
 
-function _lockSize (w, h) {
+function _lockSize(w, h) {
 	window.MinWidth = window.MaxWidth = w;
 	window.MinHeight = window.MaxHeight = h;
 }
 
-function _menu (x, y, flags) {
+function _menu(x, y, flags) {
 	let m1 = window.CreatePopupMenu();
 	let s1 = window.CreatePopupMenu();
 	let s2 = window.CreatePopupMenu();
@@ -550,7 +537,7 @@ function _menu (x, y, flags) {
 	}
 }
 
-function _open (file) {
+function _open(file) {
 	if (_isFile(file)) {
 		return utils.ReadTextFile(file);
 	} else {
@@ -558,25 +545,25 @@ function _open (file) {
 	}
 }
 
-function _q (value) {
+function _q(value) {
 	return '"' + value + '"';
 }
 
-function _recycleFile (file) {
+function _recycleFile(file) {
 	if (_isFile(file)) {
 		app.Namespace(10).MoveHere(file);
 	}
 }
 
-function _RGB (r, g, b) {
+function _RGB(r, g, b) {
 	return 0xFF000000 | r << 16 | g << 8 | b;
 }
 
-function _RGBA (r, g, b, a) {
+function _RGBA(r, g, b, a) {
 	return a << 24 | r << 16 | g << 8 | b;
 }
 
-function _run () {
+function _run() {
 	try {
 		WshShell.Run(_.map(arguments, _q).join(' '));
 		return true;
@@ -585,14 +572,14 @@ function _run () {
 	}
 }
 
-function _runCmd (command, wait) {
+function _runCmd(command, wait) {
 	try {
 		WshShell.Run(command, 0, wait);
 	} catch (e) {
 	}
 }
 
-function _save (file, value) {
+function _save(file, value) {
 	if (_isFolder(utils.FileTest(file, 'split')[0]) && utils.WriteTextFile(file, value)) {
 		return true;
 	}
@@ -600,28 +587,15 @@ function _save (file, value) {
 	return false;
 }
 
-function _setClipboardData (value) {
+function _setClipboardData(value) {
 	doc.parentWindow.clipboardData.setData('Text', value.toString());
 }
 
-function _scale (size) {
+function _scale(size) {
 	return Math.round(size * DPI / 72);
 }
 
-function _shortPath (file) {
-	return fso.GetFile(file).ShortPath;
-}
-
-function _splitRGB (c) {
-	const tmp = c.split('-');
-	if (tmp.length == 4) {
-		return _RGBA(tmp[0], tmp[1], tmp[2], tmp[3]);
-	} else {
-		return _RGB(tmp[0], tmp[1], tmp[2]);
-	}
-}
-
-function _stripTags (value) {
+function _stripTags(value) {
 	doc.open();
 	let div = doc.createElement('div');
 	div.innerHTML = value.toString().replace(/<[Pp][^>]*>/g, '').replace(/<\/[Pp]>/g, '<br>').replace(/\n/g, '<br>');
@@ -630,39 +604,24 @@ function _stripTags (value) {
 	return tmp;
 }
 
-function _tagged (value) {
+function _tagged(value) {
 	return value != '' && value != '?';
 }
 
-function _textWidth (value, font) {
+function _textWidth(value, font) {
 	return _gr.CalcTextWidth(value, font);
 }
 
-function _tf (t, metadb) {
-	if (!metadb) {
-		return '';
-	}
-	let tfo = fb.TitleFormat(t);
-	const str = tfo.EvalWithMetadb(metadb);
-	return str;
-}
-
-function _tfe (t, force) {
-	let tfo = fb.TitleFormat(t);
-	const str = tfo.Eval(force);
-	return str;
-}
-
-function _toRGB (a) {
+function _toRGB(a) {
 	const b = a - 0xFF000000;
 	return [b >> 16, b >> 8 & 0xFF, b & 0xFF];
 }
 
-function _ts () {
+function _ts() {
 	return Math.floor(_.now() / 1000);
 }
 
-function _tt (value) {
+function _tt(value) {
 	if (tooltip.Text != value) {
 		tooltip.Text = value;
 		tooltip.Activate();
