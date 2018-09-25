@@ -1,3 +1,11 @@
+/**
+ * @constructor
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ * @param {number} colour
+ */
 function _rating(x, y, h, colour) {
 	this.paint = (gr) => {
 		if (panel.metadb) {

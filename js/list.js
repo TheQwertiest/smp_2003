@@ -1,3 +1,11 @@
+/**
+ * @constructor
+ * @param {string} mode
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ */
 function _list(mode, x, y, w, h) {
 	this.playback_queue_changed = () => {
 		if (this.mode == 'queue_viewer') {

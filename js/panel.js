@@ -1,3 +1,6 @@
+/**
+ * @constructor
+ */
 function _panel() {
 	this.item_focus_change = () => {
 		if (this.metadb_func) {

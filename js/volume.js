@@ -1,3 +1,10 @@
+/**
+ * @constructor
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ */
 function _volume(x, y, w, h) {
 	this.volume_change = () => {
 		window.RepaintRect(this.x, this.y, this.w, this.h);

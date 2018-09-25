@@ -1,3 +1,10 @@
+/**
+ * @constructor
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ */
 function _albumart (x, y, w, h) {
 	this.paint = (gr) => {
 		if (this.properties.cd.enabled) {

@@ -1,3 +1,9 @@
+/**
+ * @constructor
+ * @param {number} x
+ * @param {number} y
+ * @param {number} size
+ */
 function _listenbrainz (x, y, size) {
 	this.playback_new_track = (metadb) => {
 		if (!metadb) {

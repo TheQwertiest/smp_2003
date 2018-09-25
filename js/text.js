@@ -1,3 +1,11 @@
+/**
+ * @constructor
+ * @param {string} mode
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ */
 function _text(mode, x, y, w, h) {
 	this.size = () => {
 		this.rows = Math.floor((this.h - _scale(24)) / panel.row_height);
