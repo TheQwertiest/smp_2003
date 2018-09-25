@@ -1,8 +1,7 @@
 _.mixin({
 	lastfm : function () {
 		this.notify_data = (name, data) => {
-			switch (name) {
-			case '2K3.NOTIFY.LASTFM':
+			if (name == '2K3.NOTIFY.LASTFM') {
 				this.username = this.read_ini('username');
 				this.sk = this.read_ini('sk');
 				if (typeof buttons == 'object' && typeof buttons.update == 'function') {
@@ -10,16 +9,10 @@ _.mixin({
 					window.Repaint();
 				}
 				_.forEach(panel.list_objects, (item) => {
-					if (item.mode == 'lastfm_info' && item.properties.mode.value == 1) {
+					if (item.mode == 'lastfm_info' && item.properties.mode.value > 0) {
 						item.update();
 					}
 				});
-				break;
-			case '2K3.NOTIFY.LOVE':
-				if (typeof buttons == 'object' && typeof buttons.update == 'function') { // make sure this only fires from scrobbler/lover scripts
-					this.post(this.tfo.loved.EvalWithMetadb(data) == 1 ? 'track.unlove' : 'track.love', null, data);
-				}
-				break;
 			}
 		}
 		
