@@ -464,7 +464,7 @@ function _lastModified(file) {
 
 function _lineWrap(value, font, width) {
 	let result = [];
-	_.forEach(value, (paragraph) => {
+	_.forEach(value.split('\n'), (paragraph) => {
 		if (paragraph.length < 5) {
 			result.push(paragraph);
 		} else {
