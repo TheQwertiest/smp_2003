@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @constructor
- * @param {number} x
- * @param {number} y
- * @param {number} size
- * @param {number} colour
- */
 function _rating(x, y, size, colour) {
 	this.paint = (gr) => {
 		if (panel.metadb) {

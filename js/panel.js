@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * @constructor
- * @param {boolean} [custom_background = false]
- */
 function _panel(custom_background = false) {
 	this.item_focus_change = () => {
 		if (this.metadb_func) {

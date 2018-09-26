@@ -1,8 +1,5 @@
 'use strict';
 
-/**
- * @constructor
- */
 function _lastfm() {
 	this.notify_data = (name, data) => {
 		if (name == '2K3.NOTIFY.LASTFM') {

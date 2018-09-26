@@ -13,14 +13,6 @@ _.mixin({
 	}
 });
 
-/**
- * @constructor
- * @param {string} mode Allowed values: 'autoplaylists', 'lastfm_info', 'musicbrainz', 'properties'
- * @param {number} x
- * @param {number} y
- * @param {number} w
- * @param {number} h
- */
 function _list(mode, x, y, w, h) {
 	this.playback_queue_changed = () => {
 		if (this.mode == 'queue_viewer') {

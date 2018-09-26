@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @constructor
- * @param {number} x
- * @param {number} y
- * @param {number} w
- * @param {number} h
- */
 function _seekbar(x, y, w, h) {
 	this.playback_seek = () => {
 		window.RepaintRect(this.x - _scale(75), this.y - _scale(10), this.w + _scale(150), this.h + _scale(20));

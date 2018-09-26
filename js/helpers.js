@@ -14,21 +14,6 @@ function on_script_unload() {
 	_tt('');
 }
 
-/**
- * @constructor
- * @param {number} x
- * @param {number} y
- * @param {number} w
- * @param {number} h
- * @param {object} img_src
- * "normal" is required, "hover" is optional. Examples:
- * 
- * { normal : "c:\\path\\to\\normal.jpg" }
- * 
- * { normal : "c:\\path\\to\\normal.jpg", hover : "c:\\path\\to\\hover.jpg" }
- * @param {function} fn
- * @param {string} tiptext
- */
 function _button(x, y, w, h, img_src, fn, tiptext) {
 	this.paint = (gr) => {
 		if (this.img) {
@@ -67,9 +52,6 @@ function _button(x, y, w, h, img_src, fn, tiptext) {
 	this.img = this.img_normal;
 }
 
-/**
- * @constructor
- */
 function _buttons() {
 	this.paint = (gr) => {
 		_.invokeMap(this.buttons, 'paint', gr);
@@ -118,9 +100,6 @@ function _buttons() {
 	this.btn = null;
 }
 
-/**
- * @constructor
- */
 function _hacks() {
 	this.disable = () => {
 		this.uih.MainMenuState = this.MainMenuState.Show;
@@ -150,12 +129,6 @@ function _hacks() {
 	this.uih.MaxSize = false;
 }
 
-/**
- * window.GetProperty / window.SetProperty helper
- * @constructor
- * @param {string} a Property name
- * @param {string|number|boolean} b Default value
- */
 function _p(a, b) {
 	Object.defineProperty(this, _.isBoolean(b) ? 'enabled' : 'value', {
 		get() {
@@ -176,16 +149,6 @@ function _p(a, b) {
 	this.b = window.GetProperty(a, b);
 }
 
-/**
- * @constructor
- * @param {string} t
- * @param {number} x
- * @param {number} y
- * @param {number} w
- * @param {number} h
- * @param {boolean} v
- * @param {function} fn
- */
 function _sb(t, x, y, w, h, v, fn) {
 	this.paint = (gr, colour) => {
 		gr.SetTextRenderingHint(4);

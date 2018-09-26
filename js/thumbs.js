@@ -1,8 +1,5 @@
 'use strict';
 
-/**
- * @constructor
- */
 function _thumbs() {
 	this.size = (f) => {
 		this.nc = f || this.nc;
