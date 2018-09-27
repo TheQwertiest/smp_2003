@@ -646,7 +646,7 @@ let tooltip = window.CreateTooltip('Segoe UI', _scale(12));
 tooltip.SetMaxWidth(1200);
 
 let folders = {};
-folders.home = fb.ProfilePath + 'smp_2003\\';
+folders.home = fb.ComponentPath + 'samples\\complete\\';
 folders.images = folders.home + 'images\\';
 folders.data = fb.ProfilePath + 'js_data\\';
 folders.artists = folders.data + 'artists\\';
