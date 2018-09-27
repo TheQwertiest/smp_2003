@@ -350,11 +350,14 @@ function _text(mode, x, y, w, h) {
 		switch (this.mode) {
 		case 'allmusic':
 			this.is_match = (artist, album) => {
+				if (!panel.metadb) {
+					return false;
+				}
 				return this.tidy(artist) == this.tidy(this.artist) && this.tidy(album) == this.tidy(this.album);
 			}
 			
 			this.tidy = (value) => {
-				return panel.tf('$replace($lower($ascii(' + _fbEscape(value) + ')), & ,, and ,)');
+				return fb.TitleFormat('$replace($lower($ascii(' + _fbEscape(value) + ')), & ,, and ,)').EvalWithMetadb(panel.metadb);
 			}
 			
 			_createFolder(folders.data);
