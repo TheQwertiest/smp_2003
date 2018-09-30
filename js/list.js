@@ -1,7 +1,7 @@
 'use strict';
 
 _.mixin({
-	nest (collection, keys) {
+	nest(collection, keys) {
 		if (!keys.length) {
 			return collection;
 		} else {
@@ -176,7 +176,7 @@ function _list(mode, x, y, w, h) {
 				break;
 			case x > this.x + this.text_x && x < this.x + this.text_x + Math.min(this.data[this.index].width, this.text_width):
 				window.SetCursor(IDC_HAND);
-				if (this.data[this.index].url.indexOf('http') == 0) {
+				if (this.data[this.index].url.startsWith('http')) {
 					_tt(this.data[this.index].url);
 				} else {
 					_tt('Autoplaylist: ' + this.data[this.index].url);
@@ -205,7 +205,7 @@ function _list(mode, x, y, w, h) {
 				}
 				break;
 			case x > this.x + this.text_x && x < this.x + this.text_x + Math.min(this.data[this.index].width, this.text_width):
-				if (this.data[this.index].url.indexOf('http') == 0) {
+				if (this.data[this.index].url.startsWith('http')) {
 					_run(this.data[this.index].url);
 				} else {
 					plman.CreateAutoPlaylist(plman.PlaylistCount, this.data[this.index].name, this.data[this.index].url);

@@ -196,7 +196,7 @@ function _listenbrainz (x, y, size) {
 			tmp[key] = [];
 			for (let j = 0; j < f.MetaValueCount(i); j++) {
 				let value = f.MetaValue(i, j);
-				if (key.indexOf('musicbrainz') == 0) {
+				if (key.startsWith('musicbrainz')) {
 					// if Picard has written multiple MBIDs as a string, use the first one
 					value = value.substring(0, 36);
 					if (_isUUID(value)) {

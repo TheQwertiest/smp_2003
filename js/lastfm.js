@@ -132,7 +132,7 @@ function _lastfm() {
 			}
 			return;
 		case 'track.love':
-			if (this.xmlhttp.responseText.indexOf('ok') > -1) {
+			if (this.xmlhttp.responseText.includes('ok')) {
 				console.log(N, 'Track loved successfully.');
 				metadb.SetLoved(1);
 				metadb.RefreshStats();
@@ -140,7 +140,7 @@ function _lastfm() {
 			}
 			break;
 		case 'track.unlove':
-			if (this.xmlhttp.responseText.indexOf('ok') > -1) {
+			if (this.xmlhttp.responseText.includes('ok')) {
 				console.log(N, 'Track unloved successfully.');
 				metadb.SetLoved(0);
 				metadb.RefreshStats();

@@ -1,9 +1,5 @@
 'use strict';
 
-/// <reference path="../../user-components/foo_spider_monkey_panel/docs/js_doc/ActiveXObject.js" />
-/// <reference path="../../user-components/foo_spider_monkey_panel/docs/js_doc/Interfaces.js" />
-/// <reference path="../../user-components/foo_spider_monkey_panel/docs/js_doc/IUiHacks.js" />
-
 Array.prototype.srt=function(){for(var z=0,t;t=this[z];z++){this[z]=[];var x=0,y=-1,n=true,i,j;while(i=(j=t.charAt(x++)).charCodeAt(0)){var m=(i==46||(i>=48&&i<=57));if(m!==n){this[z][++y]='';n=m;}
 this[z][y]+=j;}}
 this.sort(function(a,b){for(var x=0,aa,bb;(aa=a[x])&&(bb=b[x]);x++){aa=aa.toLowerCase();bb=bb.toLowerCase();if(aa!==bb){var c=Number(aa),d=Number(bb);if(c==aa&&d==bb){return c-d;}else return(aa>bb)?1:-1;}}
@@ -350,7 +346,7 @@ function _getFiles(folder, exts, newest_first) {
 		let e = new Enumerator(fso.GetFolder(folder).Files);
 		for (; !e.atEnd(); e.moveNext()) {
 			const path = e.item().Path;
-			if (exts.toLowerCase().indexOf(path.split('.').pop().toLowerCase()) > -1) {
+			if (exts.toLowerCase().includes(path.split('.').pop().toLowerCase())) {
 				files.push(path);
 			}
 		}

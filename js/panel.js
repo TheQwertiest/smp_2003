@@ -116,7 +116,8 @@ function _panel(custom_background = false) {
 			break;
 		case idx <= 20:
 			this.fonts.size.value = idx;
-			on_font_changed();
+			this.font_changed();
+			window.Repaint();
 			break;
 		case idx == 100:
 		case idx == 101:
@@ -153,7 +154,7 @@ function _panel(custom_background = false) {
 			this.tfo[t] = fb.TitleFormat(t);
 		}
 		const path = this.tfo['$if2(%__@%,%path%)'].EvalWithMetadb(this.metadb);
-		if (fb.IsPlaying && (path.indexOf('http') == 0 || path.indexOf('mms') == 0)) {
+		if (fb.IsPlaying && (path.startsWith('http') || path.startsWith('mms'))) {
 			return this.tfo[t].Eval();
 		} else {
 			return this.tfo[t].EvalWithMetadb(this.metadb);

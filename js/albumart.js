@@ -29,7 +29,7 @@ function _albumart (x, y, w, h) {
 		this.tooltip = this.path = '';
 		if (panel.metadb) {
 			this.img = utils.GetAlbumArtV2(panel.metadb, this.properties.id.value);
-			if (this.img && panel.metadb.RawPath.indexOf('file') == 0) {
+			if (this.img && panel.metadb.RawPath.startsWith('file')) {
 				utils.GetAlbumArtAsync(window.ID, panel.metadb, this.properties.id.value, true, false, true);
 			}
 		}
