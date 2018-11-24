@@ -113,8 +113,7 @@ function _rating(x, y, size, colour) {
 			const tmp = this.hrating == this.rating ? '' : this.hrating;
 			let obj = {};
 			obj[this.properties.tag.value] = tmp;
-			let handles = fb.CreateHandleList();
-			handles.Add(panel.metadb);
+			let handles = new FbMetadbHandleList(panel.metadb);
 			handles.UpdateFileInfoFromJSON(JSON.stringify(obj));
 			break;
 		case 3: // Spider Monkey Panel DB

@@ -109,7 +109,7 @@ function _lastfm() {
 				let tfo = fb.TitleFormat('$lower(%artist% - %title%)');
 				let items = fb.GetLibraryItems();
 				items.OrderByFormat(tfo, 1);
-				let items_to_refresh = fb.CreateHandleList();
+				let items_to_refresh = new FbMetadbHandleList();
 				for (let i = 0; i < items.Count; i++) {
 					let m = items[i];
 					let current = tfo.EvalWithMetadb(m);
