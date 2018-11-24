@@ -106,13 +106,12 @@ function _lastfm() {
 				this.get_loved_tracks(this.page);
 			} else {
 				console.log(this.loved_tracks.length, 'loved tracks were found on Last.fm.');
-				let tfo = fb.TitleFormat('$lower(%artist% - %title%)');
 				let items = fb.GetLibraryItems();
-				items.OrderByFormat(tfo, 1);
+				items.OrderByFormat(this.tfo.key, 1);
 				let items_to_refresh = new FbMetadbHandleList();
 				for (let i = 0; i < items.Count; i++) {
 					let m = items[i];
-					let current = tfo.EvalWithMetadb(m);
+					let current = this.tfo.key.EvalWithMetadb(m);
 					let idx = _.indexOf(this.loved_tracks, current);
 					if (idx > -1) {
 						this.loved_tracks.splice(idx, 1);
@@ -196,6 +195,7 @@ function _lastfm() {
 	}
 	
 	this.tfo = {
+		key : fb.TitleFormat('$lower(%artist% - %title%)'),
 		artist : fb.TitleFormat('%artist%'),
 		title : fb.TitleFormat('%title%'),
 		album : fb.TitleFormat('[%album%]'),
