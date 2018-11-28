@@ -120,7 +120,7 @@ function _lastfm() {
 					}
 				}
 				console.log(items_to_refresh.Count, 'library tracks matched and updated. Duplicates are not counted.');
-				console.log('For those updated tracks, %JSP_LOVED% now has the value of 1 in all components/search dialogs.');
+				console.log('For those updated tracks, %SMP_LOVED% now has the value of 1 in all components/search dialogs.');
 				if (this.loved_tracks.length) {
 					console.log('The following tracks were not matched:');
 					_.forEach(this.loved_tracks, (item) => {
@@ -197,11 +197,7 @@ function _lastfm() {
 	this.tfo = {
 		key : fb.TitleFormat('$lower(%artist% - %title%)'),
 		artist : fb.TitleFormat('%artist%'),
-		title : fb.TitleFormat('%title%'),
-		album : fb.TitleFormat('[%album%]'),
-		loved : fb.TitleFormat('$if2(%JSP_LOVED%,0)'),
-		playcount : fb.TitleFormat('$if2(%JSP_PLAYCOUNT%,0)'),
-		first_played : fb.TitleFormat('%JSP_FIRST_PLAYED%')
+		title : fb.TitleFormat('%title%')
 	};
 	
 	_createFolder(folders.data);
