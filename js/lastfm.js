@@ -99,7 +99,7 @@ function _lastfm() {
 					const title = item.name.toLowerCase();
 					return artist + ' - ' + title;
 				}))];
-				console.log('Loved tracks: completed page', + this.page, 'of ', this.pages);
+				console.log('Loved tracks: completed page', this.page, 'of', this.pages);
 			}
 			if (this.page < this.pages) {
 				this.page++;
