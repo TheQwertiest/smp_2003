@@ -320,7 +320,7 @@ function _fileExpired(file, period) {
 }
 
 function _formatNumber(number, separator) {
-	return number.replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
 function _gdiFont(name, size, style) {
