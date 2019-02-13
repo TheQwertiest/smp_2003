@@ -21,6 +21,10 @@ function on_font_changed() {
 	window.Repaint();
 }
 
+function on_get_album_art_done(handle, art_id, image, image_path) {
+	albumart.get_album_art_done(image_path);
+}
+
 function on_item_focus_change() {
 	panel.item_focus_change();
 }
