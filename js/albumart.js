@@ -28,24 +28,9 @@ function _albumart (x, y, w, h) {
 		this.img = null;
 		this.tooltip = this.path = '';
 		if (panel.metadb) {
-			this.img = utils.GetAlbumArtV2(panel.metadb, this.properties.id.value);
-			if (this.img && panel.metadb.RawPath.startsWith('file')) {
-				utils.GetAlbumArtAsync(window.ID, panel.metadb, this.properties.id.value, true, false, true);
-			}
-		}
-		window.Repaint();
-	}
-	
-	this.get_album_art_done = (p) => {
-		this.path = p;
-		if (this.img) {
-			this.tooltip = 'Original dimensions: ' + this.img.Width + 'x' + this.img.Height + 'px';
-			if (_isFile(this.path)) {
-				this.tooltip += '\nPath: ' + this.path;
-				if (panel.metadb.Path != this.path) {
-					this.tooltip += '\nSize: ' + utils.FormatFileSize(fso.GetFile(this.path).Size);
-				}
-			}
+			get_album_art(this);
+		} else {
+			window.Repaint();
 		}
 	}
 	
@@ -182,6 +167,22 @@ function _albumart (x, y, w, h) {
 		default:
 			return false;
 		}
+	}
+	
+	let get_album_art = async (obj) => {
+		let result = await utils.GetAlbumArtAsyncV2(window.ID, panel.metadb, obj.properties.id.value);
+		if (result.image) {
+			obj.img = result.image;
+			obj.path = result.path;
+			obj.tooltip = 'Original dimensions: ' + obj.img.Width + 'x' + obj.img.Height + 'px';
+			if (_isFile(obj.path)) {
+				obj.tooltip += '\nPath: ' + obj.path;
+				if (panel.metadb.Path != obj.path) {
+					obj.tooltip += '\nSize: ' + utils.FormatFileSize(utils.FileTest(obj.path, 's'));
+				}
+			}
+		}
+		window.Repaint();
 	}
 	
 	this.x = x;
