@@ -97,7 +97,7 @@ function _thumbs() {
 		case this.properties.mode.value == 0: // grid
 			gr.DrawImage(this.img, this.x, this.y, this.w, this.h, 0, this.offset * this.properties.px.value, this.w, this.h);
 			if (this.overlay) {
-				_.drawOverlay(gr, this.x, this.y, this.w, this.h);
+				_drawOverlay(gr, this.x, this.y, this.w, this.h);
 				this.image_xywh = _drawImage(gr, this.images[this.image], 20, 20, panel.w - 40, panel.h - 40, image.centre);
 				this.close_btn.paint(gr, _RGB(230, 230, 230));
 			} else {
