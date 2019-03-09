@@ -91,8 +91,8 @@ function on_mouse_rbtn_up(x, y) {
 	if (buttons.buttons.lover.trace(x, y)) {
 		const flag = lastfm.username.length ? MF_STRING : MF_GRAYED;
 		let m = window.CreatePopupMenu();
-		m.AppendMenuItem(MF_STRING, 1, "Last.fm username...");
-		m.AppendMenuItem(flag, 2, "Authorise");
+		m.AppendMenuItem(MF_STRING, 1, 'Last.fm username...');
+		m.AppendMenuItem(flag, 2, 'Authorise');
 		m.AppendMenuSeparator();
 		m.AppendMenuItem(flag, 3, 'Bulk import Last.fm loved tracks');
 		m.AppendMenuSeparator();
