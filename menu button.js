@@ -9,6 +9,12 @@ let panel = new _panel(true);
 let buttons = new _buttons();
 buttons.buttons.menu = new _button(0, 0, 36, 36, {normal : 'misc\\foobar2000.png'}, (x, y, mask) => { _menu(0, 36); }, 'Menu');
 
+function on_focus(is_focused) {
+	if (is_focused) {
+		plman.SetActivePlaylistContext();
+	}
+}
+
 function on_colours_changed() {
 	panel.colours_changed();
 	window.Repaint();
