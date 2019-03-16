@@ -581,9 +581,6 @@ function _ts() {
 }
 
 function _tt(value) {
-	if (value.length > 80) {
-		value = value.substr(0, 76) + '...';
-	}
 	if (tooltip.Text != value) {
 		tooltip.Text = value;
 		tooltip.Activate();
