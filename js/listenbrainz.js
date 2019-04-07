@@ -7,7 +7,6 @@ function _listenbrainz (x, y, size) {
 		}
 		this.metadb = metadb;
 		this.time_elapsed = 0;
-		this.timestamp = _ts();
 		this.target_time = this.properties.listenbrainz.enabled ? Math.min(Math.ceil(fb.PlaybackLength / 2), 240) : -1;
 	}
 	
@@ -50,13 +49,14 @@ function _listenbrainz (x, y, size) {
 		let payload = {
 			track_metadata : {
 				artist_name : _.first(tags.artist),
-				release_name : _.first(tags.album),
 				track_name : _.first(tags.title)
 			}
 		};
 		
 		if (single) {
-			payload.listened_at = this.timestamp;
+			payload.listened_at = _ts();
+			
+			payload.track_metadata.release_name = _.first(tags.album);
 			
 			payload.track_metadata.additional_info = {
 				// must be arrays
@@ -282,7 +282,6 @@ function _listenbrainz (x, y, size) {
 	this.xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
 	this.time_elapsed = 0;
 	this.target_time = 0;
-	this.timestamp = 0;
 	this.max_listens = 50;
 	this.mapping = {
 		'acoustid id' : 'acoustid_id',
