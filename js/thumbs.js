@@ -515,7 +515,9 @@ function _thumbs() {
 	
 	this.success = (base) => {
 		_(_getElementsByTagName(this.xmlhttp.responseText, 'img'))
-			.filter({className : 'image-list-image'})
+			.filter(function (item) {
+				return item.src.indexOf('https://lastfm-img2.akamaized.net/i/u/avatar170s/') == 0;
+			})
 			.take(this.properties.limit.value)
 			.forEach((item) => {
 				const url = item.src.replace('avatar170s/', '');
