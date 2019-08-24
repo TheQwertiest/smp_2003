@@ -516,7 +516,7 @@ function _thumbs() {
 	this.success = (base) => {
 		_(_getElementsByTagName(this.xmlhttp.responseText, 'img'))
 			.filter(function (item) {
-				return item.src.indexOf('https://lastfm-img2.akamaized.net/i/u/avatar170s/') == 0;
+				return item.src.startsWith('https://lastfm-img2.akamaized.net/i/u/avatar170s/');
 			})
 			.take(this.properties.limit.value)
 			.forEach((item) => {
