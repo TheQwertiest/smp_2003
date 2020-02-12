@@ -174,7 +174,7 @@ function _thumbs() {
 	
 	this.playback_time = () => {
 		this.counter++;
-		if (this.counter == 2 && this.images.length == 0) {
+		if (this.properties.auto_download.enabled && this.counter == 2 && this.images.length == 0) {
 			var np = fb.GetNowPlaying();
 			// check selection matches playing item
 			if (panel.metadb.Path == np.Path && panel.metadb.Subsong == np.Subsong) {
@@ -319,6 +319,8 @@ function _thumbs() {
 			panel.m.AppendMenuItem(MF_STRING, 1003, 'Set custom folder...');
 		} else { // last.fm
 			panel.m.AppendMenuItem(panel.metadb ? MF_STRING : MF_GRAYED, 1004, 'Download now');
+			panel.m.AppendMenuItem(MF_STRING, 1005, 'Automatic downloads');
+			panel.m.CheckMenuItem(1005, this.properties.auto_download.enabled);
 			_.forEach(this.limits, (item) => {
 				panel.s10.AppendMenuItem(MF_STRING, item + 1010, item);
 			});
@@ -394,6 +396,9 @@ function _thumbs() {
 			break;
 		case 1004:
 			this.download();
+			break;
+		case 1005:
+			this.properties.auto_download.toggle();
 			break;
 		case 1011:
 		case 1013:
@@ -585,7 +590,8 @@ function _thumbs() {
 		px : new _p('2K3.THUMBS.PX', 75),
 		cycle : new _p('2K3.THUMBS.CYCLE', 0),
 		sort : new _p('2K3.THUMBS.SORT', 0), // 0 a-z 1 newest first
-		aspect : new _p('2K3.THUMBS.ASPECT', image.crop_top)
+		aspect : new _p('2K3.THUMBS.ASPECT', image.crop_top),
+		auto_download : new _p('2K3.THUMBS.AUTO.DOWNLOAD', true),
 	};
 	this.close_btn = new _sb(chars.close, 0, 0, _scale(12), _scale(12), () => { return this.properties.mode.value == 0 && this.overlay; }, () => { this.enable_overlay(false); });
 	window.SetInterval(this.interval_func, 1000);
