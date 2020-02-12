@@ -167,6 +167,22 @@ function _thumbs() {
 		this.update();
 	}
 	
+	this.playback_new_track = () => {
+		this.counter = 0;
+		panel.item_focus_change();
+	}
+	
+	this.playback_time = () => {
+		this.counter++;
+		if (this.counter == 2 && this.images.length == 0) {
+			var np = fb.GetNowPlaying();
+			// check selection matches playing item
+			if (panel.metadb.Path == np.Path && panel.metadb.Subsong == np.Subsong) {
+				this.download();
+			}
+		}
+	}
+	
 	this.trace = (x, y) => {
 		return x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.h;
 	}
@@ -559,6 +575,7 @@ function _thumbs() {
 	this.image_xywh = [];
 	this.index = 0;
 	this.time = 0;
+	this.counter = 0;
 	this.xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
 	this.properties = {
 		mode : new _p('2K3.THUMBS.MODE', 4), // 0 grid 1 left 2 right 3 top 4 bottom 5 off
