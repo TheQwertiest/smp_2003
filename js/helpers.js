@@ -194,7 +194,7 @@ function _artistFolder(artist) {
 	if (_isFolder(folder)) {
 		return fso.GetFolder(folder) + '\\';
 	} else {
-		folder = folders.artists + _.truncate(a, 64);
+		folder = folders.artists + _.truncate(a, { length : 64 });
 		_createFolder(folder);
 		return fso.GetFolder(folder) + '\\';
 	}
