@@ -508,7 +508,7 @@ function _q(value) {
 
 function _recycleFile(file) {
 	if (_isFile(file)) {
-		app.Namespace(10).MoveHere(file);
+		app.NameSpace(10).MoveHere(file);
 	}
 }
 
