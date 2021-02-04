@@ -9,9 +9,6 @@ include(fb.ComponentPath + 'samples\\complete\\js\\list.js');
 let panel = new _panel();
 let list = new _list('properties', LM, TM, 0, 0);
 
-// uncomment if you want to display data from the SMP database
-// list.custom_fields = ['SMP_PLAYCOUNT', 'SMP_LOVED', 'SMP_FIRST_PLAYED', 'SMP_LAST_PLAYED', 'SMP_RATING'];
-
 panel.item_focus_change();
 
 function on_size() {

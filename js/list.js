@@ -1,5 +1,18 @@
 'use strict';
 
+_.mixin({
+	nest(collection, keys) {
+		if (!keys.length) {
+			return collection;
+		} else {
+			return _(collection)
+				.groupBy(keys[0])
+				.mapValues((values) => _.nest(values, keys.slice(1)))
+				.value();
+		}
+	}
+});
+
 function _list(mode, x, y, w, h) {
 	this.playback_queue_changed = () => {
 		if (this.mode == 'queue_viewer') {
@@ -269,9 +282,11 @@ function _list(mode, x, y, w, h) {
 			panel.m.AppendMenuItem(MF_STRING, 1302, 'Tech Info');
 			panel.m.CheckMenuItem(1302, this.properties.tech.enabled);
 			panel.m.AppendMenuItem(this.foo_playcount ? MF_STRING : MF_GRAYED, 1303, 'Playback Statistics (foo_playcount)');
-			panel.m.CheckMenuItem(1303, this.foo_playcount && this.properties.playcount.enabled)
-			panel.m.AppendMenuItem(MF_STRING, 1304, 'Replaygain');
-			panel.m.CheckMenuItem(1304, this.properties.rg.enabled);
+			panel.m.CheckMenuItem(1303, this.foo_playcount && this.properties.playcount.enabled);
+			panel.m.AppendMenuItem(MF_STRING, 1304, 'Spider Monkey Panel Stats');
+			panel.m.CheckMenuItem(1304, this.properties.stats.enabled);
+			panel.m.AppendMenuItem(MF_STRING, 1305, 'Replaygain');
+			panel.m.CheckMenuItem(1305, this.properties.rg.enabled);
 			panel.m.AppendMenuSeparator();
 			break;
 		case 'queue_viewer':
@@ -305,23 +320,23 @@ function _list(mode, x, y, w, h) {
 			this.save();
 			break;
 		case 1100:
-			this.properties.mode.set(0);
+			this.properties.mode.value = 0;
 			this.reset();
 			break;
 		case 1101:
 		case 1102:
-			this.properties.mode.set(idx - 1100);
+			this.properties.mode.value = idx - 1100;
 			this.update();
 			break;
 		case 1110:
 		case 1111:
-			this.properties.link.set(idx - 1110);
+			this.properties.link.value = idx - 1110;
 			this.update();
 			break;
 		case 1120:
 		case 1121:
 		case 1122:
-			this.properties.method.set(idx - 1120);
+			this.properties.method.value = idx - 1120;
 			this.update();
 			break;
 		case 1130:
@@ -330,11 +345,11 @@ function _list(mode, x, y, w, h) {
 		case 1133:
 		case 1134:
 		case 1135:
-			this.properties.period.set(idx - 1130);
+			this.properties.period.value = idx - 1130;
 			this.update();
 			break;
 		case 1140:
-			this.properties.colour.set(utils.ColourPicker(window.ID, this.properties.colour.value));
+			this.properties.colour.value = utils.ColourPicker(window.ID, this.properties.colour.value);
 			window.Repaint();
 			break;
 		case 1150:
@@ -342,7 +357,7 @@ function _list(mode, x, y, w, h) {
 			break;
 		case 1200:
 		case 1201:
-				this.properties.mode.set(idx - 1200);
+			this.properties.mode.value = idx - 1200;
 			this.reset();
 			break;
 		case 1300:
@@ -362,12 +377,16 @@ function _list(mode, x, y, w, h) {
 			panel.item_focus_change();
 			break;
 		case 1304:
+			this.properties.stats.toggle();
+			panel.item_focus_change();
+			break;
+		case 1305:
 			this.properties.rg.toggle();
 			panel.item_focus_change();
 			break;
 		case 1400:
 			let tmp = utils.InputBox(window.ID, 'Enter title formatting', window.Name, this.properties.tf.value);
-			this.properties.tf.set(tmp || this.properties.tf.default_);
+			this.properties.tf.value = tmp || this.properties.tf.default_;
 			this.tfo = fb.TitleFormat(this.properties.tf.value);
 			this.update();
 			break;
@@ -565,6 +584,9 @@ function _list(mode, x, y, w, h) {
 			}
 			if (this.foo_playcount && this.properties.playcount.enabled) {
 				this.add_playcount();
+			}
+			if (this.properties.stats.enabled) {
+				this.add_stats();
 			}
 			if (this.properties.rg.enabled) {
 				this.add_rg();
@@ -1003,6 +1025,11 @@ function _list(mode, x, y, w, h) {
 				this.add();
 			}
 			
+			this.add_stats = () => {
+				this.add(['SMP_PLAYCOUNT', 'SMP_LOVED', 'SMP_FIRST_PLAYED', 'SMP_LAST_PLAYED', 'SMP_RATING']);
+				this.add();
+			}
+			
 			this.add_rg = () => {
 				this.add(['REPLAYGAIN_ALBUM_GAIN', 'REPLAYGAIN_ALBUM_PEAK', 'REPLAYGAIN_TRACK_GAIN', 'REPLAYGAIN_TRACK_PEAK']);
 				this.add();
@@ -1025,6 +1052,7 @@ function _list(mode, x, y, w, h) {
 				location : new _p('2K3.LIST.PROPERTIES.LOCATION', true),
 				tech : new _p('2K3.LIST.PROPERTIES.TECH', true),
 				playcount : new _p('2K3.LIST.PROPERTIES.PLAYCOUNT', true),
+				stats: new _p('2K3.LIST.PROPERTIES.STATS', true),
 				rg : new _p('2K3.LIST.PROPERTIES.RG', true)
 			};
 			

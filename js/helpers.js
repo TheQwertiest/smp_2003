@@ -429,19 +429,6 @@ function _main_menu_helper(name, base_id, main_menu) {
 	this.popup.AppendTo(main_menu, MF_STRING, name);
 }
 
-function _nest(collection, keys) {
-	if (!keys.length) {
-		return collection;
-	} else {
-		return _(collection)
-			.groupBy(keys[0])
-			.mapValues(function (values) {
-				return _.nest(values, keys.slice(1));
-			})
-			.value();
-	}
-}
-
 function _open(file) {
 	if (_isFile(file)) {
 		return utils.ReadTextFile(file);
@@ -450,24 +437,24 @@ function _open(file) {
 	}
 }
 
-function _p(property, default_) {
-	this.set = function (value) {
-		this.value = value;
-		window.SetProperty(this.property, this.value);
-	}
-	
+function _p(a, b) {
+	Object.defineProperty(this, _.isBoolean(b) ? 'enabled' : 'value', {
+		get() {
+			return this.b;
+		},
+		set(value) {
+			this.b = value;
+			window.SetProperty(this.a, this.b);
+		}
+	});
+
 	this.toggle = () => {
-		this.enabled = !this.enabled;
-		window.SetProperty(this.property, this.enabled);
+		this.b = !this.b;
+		window.SetProperty(this.a, this.b);
 	}
-	
-	this.property = property;
-	this.default_ = default_;
-	if (_.isBoolean(this.default_)) {
-		this.enabled = window.GetProperty(this.property, this.default_);
-	} else {
-		this.value = window.GetProperty(this.property, this.default_);
-	}
+
+	this.a = a;
+	this.b = window.GetProperty(a, b);
 }
 
 function _q(value) {
@@ -505,10 +492,8 @@ function _runCmd(command, wait) {
 }
 
 function _save(file, value) {
-        try {
-		utils.WriteTextFile(file, value);
+	if (_isFolder(utils.FileTest(file, 'split')[0]) && utils.WriteTextFile(file, value)) {
 		return true;
-	} catch (e) {
 	}
 	console.log('Error saving to ' + file);
 	return false;
