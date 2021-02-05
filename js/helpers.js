@@ -389,12 +389,12 @@ function _lockSize(w, h) {
 
 function _menu(x, y, flags) {
 	let menu = window.CreatePopupMenu();
-	let file = new _.main_menu_helper('File', 1000, menu);
-	let edit = new _.main_menu_helper('Edit', 2000, menu);
-	let view = new _.main_menu_helper('View', 3000, menu);
-	let playback = new _.main_menu_helper('Playback', 4000, menu);
-	let library = new _.main_menu_helper('Library', 5000, menu);
-	let help = new _.main_menu_helper('Help', 6000, menu);
+	let file = new _main_menu_helper('File', 1000, menu);
+	let edit = new _main_menu_helper('Edit', 2000, menu);
+	let view = new _main_menu_helper('View', 3000, menu);
+	let playback = new _main_menu_helper('Playback', 4000, menu);
+	let library = new _main_menu_helper('Library', 5000, menu);
+	let help = new _main_menu_helper('Help', 6000, menu);
 	
 	let idx = menu.TrackPopupMenu(x, y, flags);
 	switch (true) {
@@ -425,7 +425,7 @@ function _main_menu_helper(name, base_id, main_menu) {
 	this.popup = window.CreatePopupMenu();
 	this.mm = fb.CreateMainMenuManager();
 	this.mm.Init(name);
-	this.mm.BuildMenu(this.popup, base_id);
+	this.mm.BuildMenu(this.popup, base_id, -1);
 	this.popup.AppendTo(main_menu, MF_STRING, name);
 }
 
@@ -683,11 +683,11 @@ let image = {
 };
 
 let ha_links = [
-	['Title Formatting Reference', 'http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Title_Formatting_Reference'],
-	['Query Syntax', 'http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Query_syntax'],
+	['Title Formatting Reference', 'https://wiki.hydrogenaud.io/index.php?title=Foobar2000:Title_Formatting_Reference'],
+	['Query Syntax', 'https://wiki.hydrogenaud.io/index.php?title=Foobar2000:Query_syntax'],
 	['Homepage', 'https://www.foobar2000.org/'],
 	['Components', 'https://www.foobar2000.org/components'],
-	['Wiki', 'http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Foobar2000'],
+	['Wiki', 'https://wiki.hydrogenaud.io/index.php?title=Foobar2000:Foobar2000'],
 	['Forums', 'https://hydrogenaud.io/index.php/board,28.0.html']
 ];
 
