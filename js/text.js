@@ -291,12 +291,11 @@ function _text(mode, x, y, w, h) {
 			if (this.allmusic_url) {
 				this.allmusic_url = false;
 				const content = _(_getElementsByTagName(this.xmlhttp.responseText, 'div'))
-					.filter({itemprop : 'reviewBody'})
+					.filter({className : 'text'})
 					.map('innerText')
-					.stripTags()
 					.value()
 				console.log(N, content.length ? 'A review was found and saved.' : 'No review was found on the page for this album.');
-				if (_save(f, content)) {
+				if (_save(f, _stripTags(content))) {
 					this.artist = '';
 					panel.item_focus_change();
 				}
