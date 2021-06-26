@@ -849,8 +849,12 @@ function _list(mode, x, y, w, h) {
 						i++;
 					}
 				}
-				plman.CreateAutoPlaylist(plman.PlaylistCount, n, q, s, f ? 1 : 0);
-				plman.ActivePlaylist = plman.PlaylistCount - 1;
+				try {
+					plman.CreateAutoPlaylist(plman.PlaylistCount, n, q, s, f ? 1 : 0);
+					plman.ActivePlaylist = plman.PlaylistCount - 1;
+				} catch (e) {
+					fb.ShowPopupMessage(`${e}`);
+				}
 			}
 			
 			_createFolder(folders.data);
