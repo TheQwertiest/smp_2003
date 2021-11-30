@@ -467,7 +467,11 @@ function _q(value) {
 
 function _recycleFile(file) {
 	if (_isFile(file)) {
-		app.NameSpace(10).MoveHere(file);
+		try {
+			app.NameSpace(10).MoveHere(file);
+		} catch (e) {
+			console.log(N, 'Failed to recycle file:', file);
+		}
 	}
 }
 
