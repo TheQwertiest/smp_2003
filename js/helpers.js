@@ -8,10 +8,10 @@ this[z]=this[z].join('');}
 
 function on_script_unload() {
 	_tt('');
-        if (_bmp) {
-              _bmp.ReleaseGraphics(_gr);
-        }
-        _gr = null;
+	if (_bmp) {
+		_bmp.ReleaseGraphics(_gr);
+	}
+	_gr = null;
 	_bmp = null;
 }
 
@@ -241,7 +241,11 @@ function _gdiFont(name, size, style) {
 }
 
 function _getClipboardData() {
-	return doc.parentWindow.clipboardData.getData('Text');
+	try {
+		return doc.parentWindow.clipboardData.getData('Text');
+	} catch (e) {
+		return null;
+	}
 }
 
 function _getElementsByTagName(value, tag) {
@@ -543,7 +547,11 @@ function _sb(t, x, y, w, h, v, fn) {
 }
 
 function _setClipboardData(value) {
-	doc.parentWindow.clipboardData.setData('Text', value.toString());
+	try {
+		doc.parentWindow.clipboardData.setData('Text', value.toString());
+	} catch(e) {
+		console.log(N, 'Failed to set clipboard text.');
+	}
 }
 
 function _scale(size) {
@@ -626,7 +634,8 @@ const ONE_WEEK = 604800000;
 const DEFAULT_ARTIST = '$meta(artist,0)';
 const N = window.ScriptInfo.Name + ':';
 
-const DPI = WshShell.RegRead('HKCU\\Control Panel\\Desktop\\WindowMetrics\\AppliedDPI');
+let DPI = 96;
+try { DPI = WshShell.RegRead('HKCU\\Control Panel\\Desktop\\WindowMetrics\\AppliedDPI'); } catch (e) {}
 
 const LM = _scale(5);
 const TM = _scale(20);
